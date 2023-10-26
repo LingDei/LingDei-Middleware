@@ -1,15 +1,14 @@
 package method
 
 import (
-	"LingDei_Middleware/model"
-	"LingDei_Middleware/utils"
+	"LingDei-Middleware/model"
+	"LingDei-Middleware/utils"
 	"fmt"
-	"io"
 	"mime/multipart"
 )
 
 // AddVideo 添加Video
-func AddVideo(video model.Video, file io.Reader) error {
+func AddVideo(video model.Video, file_header *multipart.FileHeader) error {
 	db, err := getDB()
 	if err != nil {
 		return err
@@ -19,6 +18,13 @@ func AddVideo(video model.Video, file io.Reader) error {
 	if err := validate.Struct(video); err != nil {
 		return err
 	}
+
+	// file_header to file
+	file, err := file_header.Open()
+	if err != nil {
+		return err
+	}
+	defer file.Close()
 
 	// 上传视频
 	if err := utils.UploadFileByPieces("videos/"+video.UUID+".mp4", file); err != nil {
@@ -105,25 +111,10 @@ func CheckVideoExist(Video_uuid string) error {
 }
 
 // UpdateVideo 更新Video
-func UpdateVideo(video model.Video, file_mul *multipart.FileHeader) error {
+func UpdateVideo(video model.Video) error {
 	db, err := getDB()
 	if err != nil {
 		return err
-	}
-
-	if file_mul != nil {
-		file, err := file_mul.Open()
-		if err != nil {
-			return err
-		}
-		defer file.Close()
-
-		// 上传文件
-		if file != nil {
-			if err := utils.UploadFileByPieces("videos/"+video.UUID+".mp4", file); err != nil {
-				return err
-			}
-		}
 	}
 
 	// 检查Video_uuid是否存在

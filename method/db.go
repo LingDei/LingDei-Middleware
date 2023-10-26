@@ -1,8 +1,8 @@
 package method
 
 import (
-	"LingDei_Middleware/config"
-	"LingDei_Middleware/model"
+	"LingDei-Middleware/config"
+	"LingDei-Middleware/model"
 	"fmt"
 
 	"gorm.io/driver/mysql"

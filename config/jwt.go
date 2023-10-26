@@ -1,7 +1,7 @@
 package config
 
 import (
-	"LingDei_Middleware/model"
+	"LingDei-Middleware/model"
 
 	"github.com/gofiber/fiber/v2"
 )

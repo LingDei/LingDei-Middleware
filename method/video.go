@@ -1,8 +1,8 @@
 package method
 
 import (
-	"LingDei-Middleware/model"
-	"LingDei-Middleware/utils"
+	"LingDei_Middleware/model"
+	"LingDei_Middleware/utils"
 	"fmt"
 	"io"
 	"mime/multipart"

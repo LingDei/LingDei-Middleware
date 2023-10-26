@@ -1,7 +1,7 @@
 package method
 
 import (
-	"LingDei-Middleware/model"
+	"LingDei_Middleware/model"
 	"errors"
 
 	"github.com/gofiber/fiber/v2"

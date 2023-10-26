@@ -1,4 +1,4 @@
-module LingDei-Middleware
+module LingDei_Middleware
 
 go 1.18
 

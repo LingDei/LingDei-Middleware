@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"LingDei-Middleware/config"
+	"LingDei_Middleware/config"
 	"bytes"
 	"context"
 	"crypto/md5"

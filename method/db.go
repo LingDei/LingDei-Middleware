@@ -23,13 +23,5 @@ func init() {
 	}
 
 	// 迁移 schema
-	db.AutoMigrate(&model.User{})
-	db.AutoMigrate(&model.Discipline{})
-	db.AutoMigrate(&model.Lesson{})
-	db.AutoMigrate(&model.Subscribe{})
-	db.AutoMigrate(&model.WhiteList{})
-	db.AutoMigrate(&model.ScheduleItem{})
 	db.AutoMigrate(&model.Video{})
-	db.AutoMigrate(&model.Order{})
-	db.AutoMigrate(&model.GitLib{})
 }

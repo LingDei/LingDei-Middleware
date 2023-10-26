@@ -1,0 +1,220 @@
+basePath: /
+definitions:
+  model.OperationResp:
+    properties:
+      code:
+        type: integer
+      msg:
+        type: string
+    type: object
+  model.Video:
+    properties:
+      author_id:
+        type: string
+      category:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      thumbnail_url:
+        type: string
+      views:
+        type: integer
+    required:
+    - author_id
+    - category
+    - id
+    - name
+    - thumbnail_url
+    - views
+    type: object
+  model.VideoListResp:
+    properties:
+      code:
+        type: integer
+      video_list:
+        items:
+          $ref: '#/definitions/model.Video'
+        type: array
+    type: object
+  model.VideoResp:
+    properties:
+      base64:
+        type: string
+      code:
+        type: integer
+      url:
+        type: string
+      video:
+        $ref: '#/definitions/model.Video'
+    type: object
+host: 127.0.0.1:9000
+info:
+  contact: {}
+  description: 灵嘚中间件（LingDei-Middleware）
+  title: 灵嘚中间件
+  version: v1.0.0
+paths:
+  /video/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加视频
+      parameters:
+      - description: 视频名称
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 视频分类
+        in: query
+        name: category
+        required: true
+        type: string
+      - description: 作者 UUID
+        in: query
+        name: author_uuid
+        required: true
+        type: string
+      - description: 视频文件
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加视频
+      tags:
+      - 视频管理
+  /video/delete:
+    delete:
+      consumes:
+      - application/json
+      description: 删除视频
+      parameters:
+      - description: 视频 UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除视频
+      tags:
+      - 视频管理
+  /video/get:
+    get:
+      consumes:
+      - application/json
+      description: 获取视频
+      parameters:
+      - description: 视频 UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.VideoResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取视频
+      tags:
+      - 视频管理
+  /video/get_list:
+    get:
+      consumes:
+      - application/json
+      description: 获取视频列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.VideoListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取视频列表
+      tags:
+      - 视频管理
+  /video/update:
+    post:
+      consumes:
+      - application/json
+      description: 更新视频
+      parameters:
+      - description: 视频 UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      - description: 视频名称
+        in: query
+        name: name
+        type: string
+      - description: 视频分类
+        in: query
+        name: category
+        type: string
+      - description: 作者 UUID
+        in: query
+        name: author_uuid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新视频
+      tags:
+      - 视频管理
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

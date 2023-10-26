@@ -3,6 +3,8 @@ package main
 import (
 	"LingDei-Middleware/config"
 
+	_ "LingDei-Middleware/docs"
+
 	"github.com/gofiber/fiber/v2"
 	jwtware "github.com/gofiber/jwt/v3"
 	"github.com/gofiber/swagger"

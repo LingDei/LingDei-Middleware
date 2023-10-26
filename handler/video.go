@@ -66,8 +66,8 @@ func AddVideoHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200			{object}	model.OperationResp
-//	@Failure		400			{object}	model.OperationResp
+//	@Success		200	{object}	model.VideoListResp
+//	@Failure		400	{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/get_list [get]
 func GetVideoListHandler(c *fiber.Ctx) error {
@@ -98,9 +98,9 @@ func GetVideoListHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Param			uuid		query		string	true	"视频 UUID"
-//	@Success		200			{object}	model.VideoResp
-//	@Failure		400			{object}	model.VideoResp
+//	@Param			uuid	query		string	true	"视频 UUID"
+//	@Success		200		{object}	model.VideoResp
+//	@Failure		400		{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/get [get]
 func GetVideoHandler(c *fiber.Ctx) error {
@@ -134,9 +134,9 @@ func GetVideoHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Param			uuid		query		string	true	"视频 UUID"
-//	@Success		200			{object}	model.VideoResp
-//	@Failure		400			{object}	modle.VideoResp
+//	@Param			uuid	query		string	true	"视频 UUID"
+//	@Success		200		{object}	model.OperationResp
+//	@Failure		400		{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/delete [delete]
 func DeleteVideoHandler(c *fiber.Ctx) error {
@@ -173,8 +173,8 @@ func DeleteVideoHandler(c *fiber.Ctx) error {
 //	@Param			name		query		string	false	"视频名称"
 //	@Param			category	query		string	false	"视频分类"
 //	@Param			author_uuid	query		string	false	"作者 UUID"
-//	@Success		200			{object}	model.VideoResp
-//	@Failure		400			{object}	model.VideoResp
+//	@Success		200			{object}	model.OperationResp
+//	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/update [post]
 func UpdateVideoHandler(c *fiber.Ctx) error {

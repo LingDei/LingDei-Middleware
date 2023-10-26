@@ -20,7 +20,7 @@ func getBucketManager() (*storage.BucketManager, error) {
 	cfg := storage.Config{}
 
 	// 空间对应的机房
-	cfg.Region = &storage.ZoneHuadong
+	cfg.Region = config.QINIU_REGION
 
 	// 是否使用https域名
 	cfg.UseHTTPS = true

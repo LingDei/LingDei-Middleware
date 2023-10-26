@@ -5,6 +5,7 @@ import (
 
 	"os"
 
+	"github.com/qiniu/go-sdk/v7/storage"
 	"github.com/spf13/viper"
 )
 
@@ -22,6 +23,7 @@ var (
 	// QiNiu
 	QINIU_ACCESS_KEY = "your-access-key"
 	QINIU_SECRET_KEY = "your-secret-key"
+	QINIU_REGION     = &storage.ZoneHuadong
 	QINIU_BUCKET     = "your-bucket"
 )
 

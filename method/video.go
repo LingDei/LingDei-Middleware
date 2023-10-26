@@ -139,22 +139,6 @@ func UpdateVideo(video model.Video, file_mul *multipart.FileHeader) error {
 	return nil
 }
 
-// GetVideoListByOrderUUID
-func GetVideoListByOrderUUID(order_uuid string) ([]model.Video, error) {
-	db, err := getDB()
-	if err != nil {
-		return nil, err
-	}
-
-	var videos []model.Video
-
-	if err := db.Where("order_uuid = ?", order_uuid).Find(&videos).Error; err != nil {
-		return nil, err
-	}
-
-	return videos, nil
-}
-
 // GetVideoListByUserUUID 获取用户相关的视频列表
 func GetVideoListByUserUUID(user_uuid string) ([]model.Video, error) {
 	db, err := getDB()

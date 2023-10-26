@@ -69,7 +69,7 @@ func AddVideoHandler(c *fiber.Ctx) error {
 //	@Success		200	{object}	model.VideoListResp
 //	@Failure		400	{object}	model.OperationResp
 //	@Security		ApiKeyAuth
-//	@Router			/video/get_list [get]
+//	@Router			/video/list [get]
 func GetVideoListHandler(c *fiber.Ctx) error {
 	//检查用户权限等级
 	if err := method.CheckUserRole(method.GetUserFromToken(c).Role, config.Admin_ROLE_LEVEL); err != nil {

@@ -14,3 +14,7 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 config/config.yaml
+s.yaml
+push.sh
+pub.sh
+pub.cmd

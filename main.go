@@ -29,7 +29,7 @@ func main() {
 	}))
 
 	// 注册服务
-	// regiserService(app)
+	regiserService(app)
 
 	// 启动服务
 	app.Listen(":9000")

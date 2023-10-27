@@ -27,7 +27,6 @@ definitions:
     - id
     - name
     - thumbnail_url
-    - views
     type: object
   model.VideoListResp:
     properties:
@@ -70,11 +69,6 @@ paths:
       - description: 视频分类
         in: query
         name: category
-        required: true
-        type: string
-      - description: 作者 UUID
-        in: query
-        name: author_uuid
         required: true
         type: string
       - description: 视频文件
@@ -152,7 +146,7 @@ paths:
       summary: 获取视频
       tags:
       - 视频管理
-  /video/get_list:
+  /video/list:
     get:
       consumes:
       - application/json

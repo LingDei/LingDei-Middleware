@@ -18,7 +18,9 @@ import (
 
 func main() {
 	// 创建 Fiber 实例
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		BodyLimit: 1024 * 1024 * 1024,
+	})
 
 	// 启动 CORS
 	app.Use(cors.New(cors.Config{

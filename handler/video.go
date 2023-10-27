@@ -18,22 +18,17 @@ import (
 //	@Produce		json
 //	@Param			name		query		string	true	"视频名称"
 //	@Param			category	query		string	true	"视频分类"
-//	@Param			author_uuid	query		string	true	"作者 UUID"
 //	@Param			file		formData	file	true	"视频文件"
 //	@Success		200			{object}	model.OperationResp
 //	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/add [post]
 func AddVideoHandler(c *fiber.Ctx) error {
-	//检查用户权限等级
-	if err := method.CheckUserRole(method.GetUserFromToken(c).Role, config.Admin_ROLE_LEVEL); err != nil {
-		return c.JSON(model.OperationResp{Code: 400, Msg: err.Error()})
-	}
-
 	// 获取参数
 	var video model.Video
 	c.QueryParser(&video)
 	video.UUID = uuid.NewString()
+	video.Author_UUID = method.GetUserFromToken(c).ID
 
 	// 上传文件
 	file, err := c.FormFile("file")
@@ -43,7 +38,19 @@ func AddVideoHandler(c *fiber.Ctx) error {
 			Msg:  err.Error(),
 		})
 	}
+
+	// 检查文件类型
+	if file.Header["Content-Type"][0] != "video/mp4" {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  "请上传 mp4 格式的视频文件",
+		})
+	}
+
 	// video.Thumbnail_URL, err = utils.UploadFileByPieces(video.UUID, file)
+
+	video.Thumbnail_URL = "https://.."
+	video.Views = 0
 
 	// 创建 Video
 	if err := method.AddVideo(video, file); err != nil {
@@ -71,11 +78,6 @@ func AddVideoHandler(c *fiber.Ctx) error {
 //	@Security		ApiKeyAuth
 //	@Router			/video/list [get]
 func GetVideoListHandler(c *fiber.Ctx) error {
-	//检查用户权限等级
-	if err := method.CheckUserRole(method.GetUserFromToken(c).Role, config.Admin_ROLE_LEVEL); err != nil {
-		return c.JSON(model.OperationResp{Code: 400, Msg: err.Error()})
-	}
-
 	// 获取视频列表
 	videos, err := method.GetVideoList()
 	if err != nil {
@@ -104,11 +106,6 @@ func GetVideoListHandler(c *fiber.Ctx) error {
 //	@Security		ApiKeyAuth
 //	@Router			/video/get [get]
 func GetVideoHandler(c *fiber.Ctx) error {
-	//检查用户权限等级
-	if err := method.CheckUserRole(method.GetUserFromToken(c).Role, config.Admin_ROLE_LEVEL); err != nil {
-		return c.JSON(model.OperationResp{Code: 400, Msg: err.Error()})
-	}
-
 	// 获取参数
 	uuid := c.Query("uuid")
 
@@ -178,11 +175,6 @@ func DeleteVideoHandler(c *fiber.Ctx) error {
 //	@Security		ApiKeyAuth
 //	@Router			/video/update [post]
 func UpdateVideoHandler(c *fiber.Ctx) error {
-	//检查用户权限等级
-	if err := method.CheckUserRole(method.GetUserFromToken(c).Role, config.Admin_ROLE_LEVEL); err != nil {
-		return c.JSON(model.OperationResp{Code: 400, Msg: err.Error()})
-	}
-
 	// 获取参数
 	var video model.Video
 	c.QueryParser(&video)
@@ -200,3 +192,5 @@ func UpdateVideoHandler(c *fiber.Ctx) error {
 		Msg:  "ok",
 	})
 }
+
+// 分片上传

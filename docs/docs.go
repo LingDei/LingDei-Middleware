@@ -49,13 +49,6 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
-                        "description": "作者 UUID",
-                        "name": "author_uuid",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
                         "type": "file",
                         "description": "视频文件",
                         "name": "file",
@@ -165,7 +158,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/video/get_list": {
+        "/video/list": {
             "get": {
                 "security": [
                     {
@@ -280,8 +273,7 @@ const docTemplate = `{
                 "category",
                 "id",
                 "name",
-                "thumbnail_url",
-                "views"
+                "thumbnail_url"
             ],
             "properties": {
                 "author_id": {

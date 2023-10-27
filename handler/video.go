@@ -47,8 +47,6 @@ func AddVideoHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	// video.Thumbnail_URL, err = utils.UploadFileByPieces(video.UUID, file)
-
 	video.URL = "https://bucket.lingdei.doyi.online/videos/" + video.UUID + ".mp4"
 	video.Thumbnail_URL = "https://bucket.lingdei.doyi.online/frames/" + video.UUID + ".jpg"
 	video.Views = 0

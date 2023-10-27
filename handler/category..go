@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"LingDei-Middleware/config"
 	"LingDei-Middleware/method"
 	"LingDei-Middleware/model"
 
@@ -10,7 +11,7 @@ import (
 
 // AddCategoryHandler 添加分类
 //
-//	@Summary		添加分类
+//	@Summary		添加分类 🦸
 //	@Description	添加分类
 //	@Tags			分类管理
 //	@Accept			json
@@ -21,6 +22,11 @@ import (
 //	@Security		ApiKeyAuth
 //	@Router			/category/add [post]
 func AddCategoryHandler(c *fiber.Ctx) error {
+	//检查用户权限等级
+	if err := method.CheckUserRole(method.GetUserFromToken(c).Role, config.Admin_ROLE_LEVEL); err != nil {
+		return c.JSON(model.OperationResp{Code: 400, Msg: err.Error()})
+	}
+
 	// 获取参数
 	var category model.Category
 	c.QueryParser(&category)
@@ -100,7 +106,7 @@ func GetCategoryHandler(c *fiber.Ctx) error {
 
 // DeleteCategoryHandler 删除分类
 //
-//	@Summary		删除分类
+//	@Summary		删除分类 🦸
 //	@Description	删除分类
 //	@Tags			分类管理
 //	@Accept			json
@@ -111,6 +117,11 @@ func GetCategoryHandler(c *fiber.Ctx) error {
 //	@Security		ApiKeyAuth
 //	@Router			/category/delete [delete]
 func DeleteCategoryHandler(c *fiber.Ctx) error {
+	//检查用户权限等级
+	if err := method.CheckUserRole(method.GetUserFromToken(c).Role, config.Admin_ROLE_LEVEL); err != nil {
+		return c.JSON(model.OperationResp{Code: 400, Msg: err.Error()})
+	}
+
 	// 获取参数
 	uuid := c.Query("uuid")
 

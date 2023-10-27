@@ -125,7 +125,7 @@ func GetVideoHandler(c *fiber.Ctx) error {
 
 // DeleteVideoHandler 删除视频
 //
-//	@Summary		删除视频
+//	@Summary		删除视频 🦸
 //	@Description	删除视频
 //	@Tags			视频管理
 //	@Accept			json
@@ -160,7 +160,7 @@ func DeleteVideoHandler(c *fiber.Ctx) error {
 
 // UpdateVideoHandler 更新视频
 //
-//	@Summary		更新视频
+//	@Summary		更新视频 🦸
 //	@Description	更新视频
 //	@Tags			视频管理
 //	@Accept			json
@@ -168,12 +168,16 @@ func DeleteVideoHandler(c *fiber.Ctx) error {
 //	@Param			uuid		query		string	true	"视频 UUID"
 //	@Param			name		query		string	false	"视频名称"
 //	@Param			category	query		string	false	"视频分类"
-//	@Param			author_uuid	query		string	false	"作者 UUID"
 //	@Success		200			{object}	model.OperationResp
 //	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/update [post]
 func UpdateVideoHandler(c *fiber.Ctx) error {
+	//检查用户权限等级
+	if err := method.CheckUserRole(method.GetUserFromToken(c).Role, config.Admin_ROLE_LEVEL); err != nil {
+		return c.JSON(model.OperationResp{Code: 400, Msg: err.Error()})
+	}
+
 	// 获取参数
 	var video model.Video
 	c.QueryParser(&video)
@@ -191,5 +195,3 @@ func UpdateVideoHandler(c *fiber.Ctx) error {
 		Msg:  "ok",
 	})
 }
-
-// 分片上传

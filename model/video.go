@@ -5,7 +5,7 @@ type Video struct {
 	Name          string `json:"name" validate:"required"`
 	Category      string `json:"category" validate:"required"`
 	Thumbnail_URL string `json:"thumbnail_url" validate:"required"`
-	Views         int    `json:"views" validate:"required"`
+	Views         int    `json:"views" gorm:"default:0"`
 	Author_UUID   string `json:"author_id" validate:"required"`
 }
 

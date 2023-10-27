@@ -28,8 +28,8 @@ func regiserService(app *fiber.App) {
 	// Video
 	video := app.Group("/video")
 	video.Post("/add", handler.AddVideoHandler)
+	video.Post("/update", handler.UpdateVideoHandler)
 	video.Get("/list", handler.GetVideoListHandler)
 	video.Get("/get", handler.GetVideoHandler)
 	video.Delete("/delete", handler.DeleteVideoHandler)
-	video.Post("/update", handler.UpdateVideoHandler)
 }

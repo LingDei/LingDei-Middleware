@@ -346,7 +346,6 @@ paths:
       - description: 视频分类 UUID
         in: query
         name: category_uuid
-        required: true
         type: string
       produces:
       - application/json

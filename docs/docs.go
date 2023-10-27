@@ -440,8 +440,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "视频分类 UUID",
                         "name": "category_uuid",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
                     }
                 ],
                 "responses": {

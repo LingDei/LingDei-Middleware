@@ -167,7 +167,7 @@ func DeleteVideoHandler(c *fiber.Ctx) error {
 //	@Produce		json
 //	@Param			uuid			query		string	true	"视频 UUID"
 //	@Param			name			query		string	false	"视频名称"
-//	@Param			category_uuid	query		string	true	"视频分类 UUID"
+//	@Param			category_uuid	query		string	false	"视频分类 UUID"
 //	@Success		200				{object}	model.OperationResp
 //	@Failure		400				{object}	model.OperationResp
 //	@Security		ApiKeyAuth

@@ -14,6 +14,10 @@ func AddVideo(video model.Video, file_header *multipart.FileHeader) error {
 		return err
 	}
 
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
 	// 校验数据
 	if err := validate.Struct(video); err != nil {
 		return err
@@ -45,6 +49,10 @@ func GetVideoList() ([]model.Video, error) {
 		return nil, err
 	}
 
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
 	var videos []model.Video
 
 	if err := db.Find(&videos).Error; err != nil {
@@ -61,6 +69,10 @@ func GetVideo(uuid string) (model.Video, error) {
 		return model.Video{}, err
 	}
 
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
 	var video model.Video
 
 	if err := db.Where("uuid = ?", uuid).First(&video).Error; err != nil {
@@ -76,6 +88,10 @@ func DeleteVideo(uuid string) error {
 	if err != nil {
 		return err
 	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
 
 	var video model.Video
 
@@ -101,6 +117,10 @@ func CheckVideoExist(Video_uuid string) error {
 		return err
 	}
 
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
 	var video model.Video
 
 	if err := db.Where("uuid = ?", Video_uuid).First(&video).Error; err != nil {
@@ -116,6 +136,10 @@ func UpdateVideo(video model.Video) error {
 	if err != nil {
 		return err
 	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
 
 	// 检查Video_uuid是否存在
 	if err := CheckVideoExist(video.UUID); err != nil {
@@ -136,6 +160,10 @@ func GetVideoListByUserUUID(user_uuid string) ([]model.Video, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
 
 	var videos []model.Video
 

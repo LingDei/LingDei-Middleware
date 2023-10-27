@@ -138,3 +138,40 @@ func DeleteCategoryHandler(c *fiber.Ctx) error {
 		Msg:  "删除成功",
 	})
 }
+
+// UpdateCategoryHandler 更新分类
+//
+//	@Summary		更新分类 🦸
+//	@Description	更新分类
+//	@Tags			分类管理
+//	@Accept			json
+//	@Produce		json
+//	@Param			uuid		query		string	true	"分类 UUID"
+//	@Param			name		query		string	false	"分类名称"
+//	@Success		200			{object}	model.OperationResp
+//	@Failure		400			{object}	model.OperationResp
+//	@Security		ApiKeyAuth
+//	@Router			/category/update [post]
+func UpdateCategoryHandler(c *fiber.Ctx) error {
+	//检查用户权限等级
+	if err := method.CheckUserRole(method.GetUserFromToken(c).Role, config.Admin_ROLE_LEVEL); err != nil {
+		return c.JSON(model.OperationResp{Code: 400, Msg: err.Error()})
+	}
+
+	// 获取参数
+	var category model.Category
+	c.QueryParser(&category)
+
+	// 更新分类
+	if err := method.UpdateCategory(category); err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
+	return c.JSON(model.OperationResp{
+		Code: 200,
+		Msg:  "更新成功",
+	})
+}

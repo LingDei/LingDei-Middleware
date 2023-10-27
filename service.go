@@ -32,4 +32,12 @@ func regiserService(app *fiber.App) {
 	video.Get("/list", handler.GetVideoListHandler)
 	video.Get("/get", handler.GetVideoHandler)
 	video.Delete("/delete", handler.DeleteVideoHandler)
+
+	// Category
+	category := app.Group("/category")
+	category.Post("/add", handler.AddCategoryHandler)
+	category.Get("/list", handler.GetCategoryListHandler)
+	category.Get("/get", handler.GetCategoryHandler)
+	category.Delete("/delete", handler.DeleteCategoryHandler)
+	category.Post("/update", handler.UpdateCategoryHandler)
 }

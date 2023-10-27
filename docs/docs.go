@@ -15,6 +15,218 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/category/add": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "添加分类",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "分类管理"
+                ],
+                "summary": "添加分类 🦸",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "分类名称",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/category/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "删除分类",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "分类管理"
+                ],
+                "summary": "删除分类 🦸",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "分类 UUID",
+                        "name": "uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/category/get": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取分类",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "分类管理"
+                ],
+                "summary": "获取分类",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "分类 UUID",
+                        "name": "uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.CategoryResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/category/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取分类列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "分类管理"
+                ],
+                "summary": "获取分类列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.CategoryListResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/category/update": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "更新分类",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "分类管理"
+                ],
+                "summary": "更新分类 🦸",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "分类 UUID",
+                        "name": "uuid",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "分类名称",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
         "/video/add": {
             "post": {
                 "security": [
@@ -89,7 +301,7 @@ const docTemplate = `{
                 "tags": [
                     "视频管理"
                 ],
-                "summary": "删除视频",
+                "summary": "删除视频 🦸",
                 "parameters": [
                     {
                         "type": "string",
@@ -209,7 +421,7 @@ const docTemplate = `{
                 "tags": [
                     "视频管理"
                 ],
-                "summary": "更新视频",
+                "summary": "更新视频 🦸",
                 "parameters": [
                     {
                         "type": "string",
@@ -228,12 +440,6 @@ const docTemplate = `{
                         "type": "string",
                         "description": "视频分类",
                         "name": "category",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "作者 UUID",
-                        "name": "author_uuid",
                         "in": "query"
                     }
                 ],
@@ -255,6 +461,46 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.Category": {
+            "type": "object",
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.CategoryListResp": {
+            "type": "object",
+            "properties": {
+                "category_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Category"
+                    }
+                },
+                "code": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.CategoryResp": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "$ref": "#/definitions/model.Category"
+                },
+                "code": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.OperationResp": {
             "type": "object",
             "properties": {
@@ -270,16 +516,17 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "author_id",
-                "category",
+                "category_uuid",
                 "id",
                 "name",
-                "thumbnail_url"
+                "thumbnail_url",
+                "url"
             ],
             "properties": {
                 "author_id": {
                     "type": "string"
                 },
-                "category": {
+                "category_uuid": {
                     "type": "string"
                 },
                 "id": {
@@ -289,6 +536,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "thumbnail_url": {
+                    "type": "string"
+                },
+                "url": {
                     "type": "string"
                 },
                 "views": {
@@ -318,9 +568,6 @@ const docTemplate = `{
                 },
                 "code": {
                     "type": "integer"
-                },
-                "url": {
-                    "type": "string"
                 },
                 "video": {
                     "$ref": "#/definitions/model.Video"

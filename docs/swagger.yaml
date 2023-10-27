@@ -1,5 +1,31 @@
 basePath: /
 definitions:
+  model.Category:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  model.CategoryListResp:
+    properties:
+      category_list:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      code:
+        type: integer
+    type: object
+  model.CategoryResp:
+    properties:
+      category:
+        $ref: '#/definitions/model.Category'
+      code:
+        type: integer
+    type: object
   model.OperationResp:
     properties:
       code:
@@ -11,7 +37,7 @@ definitions:
     properties:
       author_id:
         type: string
-      category:
+      category_uuid:
         type: string
       id:
         type: string
@@ -19,14 +45,17 @@ definitions:
         type: string
       thumbnail_url:
         type: string
+      url:
+        type: string
       views:
         type: integer
     required:
     - author_id
-    - category
+    - category_uuid
     - id
     - name
     - thumbnail_url
+    - url
     type: object
   model.VideoListResp:
     properties:
@@ -43,8 +72,6 @@ definitions:
         type: string
       code:
         type: integer
-      url:
-        type: string
       video:
         $ref: '#/definitions/model.Video'
     type: object
@@ -55,6 +82,139 @@ info:
   title: 灵嘚中间件
   version: v1.0.0
 paths:
+  /category/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加分类
+      parameters:
+      - description: 分类名称
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: "添加分类 \U0001F9B8"
+      tags:
+      - 分类管理
+  /category/delete:
+    delete:
+      consumes:
+      - application/json
+      description: 删除分类
+      parameters:
+      - description: 分类 UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: "删除分类 \U0001F9B8"
+      tags:
+      - 分类管理
+  /category/get:
+    get:
+      consumes:
+      - application/json
+      description: 获取分类
+      parameters:
+      - description: 分类 UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CategoryResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取分类
+      tags:
+      - 分类管理
+  /category/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取分类列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CategoryListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取分类列表
+      tags:
+      - 分类管理
+  /category/update:
+    post:
+      consumes:
+      - application/json
+      description: 更新分类
+      parameters:
+      - description: 分类 UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      - description: 分类名称
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: "更新分类 \U0001F9B8"
+      tags:
+      - 分类管理
   /video/add:
     post:
       consumes:
@@ -116,7 +276,7 @@ paths:
             $ref: '#/definitions/model.OperationResp'
       security:
       - ApiKeyAuth: []
-      summary: 删除视频
+      summary: "删除视频 \U0001F9B8"
       tags:
       - 视频管理
   /video/get:
@@ -186,10 +346,6 @@ paths:
         in: query
         name: category
         type: string
-      - description: 作者 UUID
-        in: query
-        name: author_uuid
-        type: string
       produces:
       - application/json
       responses:
@@ -203,7 +359,7 @@ paths:
             $ref: '#/definitions/model.OperationResp'
       security:
       - ApiKeyAuth: []
-      summary: 更新视频
+      summary: "更新视频 \U0001F9B8"
       tags:
       - 视频管理
 securityDefinitions:

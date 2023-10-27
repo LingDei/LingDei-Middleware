@@ -146,10 +146,10 @@ func DeleteCategoryHandler(c *fiber.Ctx) error {
 //	@Tags			分类管理
 //	@Accept			json
 //	@Produce		json
-//	@Param			uuid		query		string	true	"分类 UUID"
-//	@Param			name		query		string	false	"分类名称"
-//	@Success		200			{object}	model.OperationResp
-//	@Failure		400			{object}	model.OperationResp
+//	@Param			uuid	query		string	true	"分类 UUID"
+//	@Param			name	query		string	false	"分类名称"
+//	@Success		200		{object}	model.OperationResp
+//	@Failure		400		{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/category/update [post]
 func UpdateCategoryHandler(c *fiber.Ctx) error {

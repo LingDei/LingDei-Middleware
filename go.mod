@@ -10,7 +10,7 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/google/uuid v1.3.1
 	github.com/qiniu/go-sdk/v7 v7.18.2
-	github.com/spf13/viper v1.17.0
+	github.com/spf13/viper v1.16.0
 	github.com/swaggo/swag v1.16.2
 	golang.org/x/crypto v0.13.0
 	gorm.io/driver/mysql v1.5.2

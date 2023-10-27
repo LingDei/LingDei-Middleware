@@ -78,7 +78,8 @@ definitions:
 host: 127.0.0.1:9000
 info:
   contact: {}
-  description: 灵嘚中间件（LingDei-Middleware）
+  description: "灵嘚中间件（LingDei-Middleware）是一个基于 Fiber 的 RESTful API 服务，用于提供灵嘚（LingDei）的后端服务。\n注意，有
+    \U0001F9B8 标识的接口需要管理员权限才能访问。"
   title: 灵嘚中间件
   version: v1.0.0
 paths:
@@ -226,9 +227,9 @@ paths:
         name: name
         required: true
         type: string
-      - description: 视频分类
+      - description: 视频分类 UUID
         in: query
-        name: category
+        name: category_uuid
         required: true
         type: string
       - description: 视频文件
@@ -342,9 +343,10 @@ paths:
         in: query
         name: name
         type: string
-      - description: 视频分类
+      - description: 视频分类 UUID
         in: query
-        name: category
+        name: category_uuid
+        required: true
         type: string
       produces:
       - application/json

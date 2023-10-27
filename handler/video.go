@@ -16,11 +16,11 @@ import (
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Param			name		query		string	true	"视频名称"
-//	@Param			category	query		string	true	"视频分类"
-//	@Param			file		formData	file	true	"视频文件"
-//	@Success		200			{object}	model.OperationResp
-//	@Failure		400			{object}	model.OperationResp
+//	@Param			name			query		string	true	"视频名称"
+//	@Param			category_uuid	query		string	true	"视频分类 UUID"
+//	@Param			file			formData	file	true	"视频文件"
+//	@Success		200				{object}	model.OperationResp
+//	@Failure		400				{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/add [post]
 func AddVideoHandler(c *fiber.Ctx) error {
@@ -165,11 +165,11 @@ func DeleteVideoHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Param			uuid		query		string	true	"视频 UUID"
-//	@Param			name		query		string	false	"视频名称"
-//	@Param			category	query		string	false	"视频分类"
-//	@Success		200			{object}	model.OperationResp
-//	@Failure		400			{object}	model.OperationResp
+//	@Param			uuid			query		string	true	"视频 UUID"
+//	@Param			name			query		string	false	"视频名称"
+//	@Param			category_uuid	query		string	true	"视频分类 UUID"
+//	@Success		200				{object}	model.OperationResp
+//	@Failure		400				{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/update [post]
 func UpdateVideoHandler(c *fiber.Ctx) error {

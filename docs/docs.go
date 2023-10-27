@@ -255,8 +255,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "视频分类",
-                        "name": "category",
+                        "description": "视频分类 UUID",
+                        "name": "category_uuid",
                         "in": "query",
                         "required": true
                     },
@@ -438,9 +438,10 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "视频分类",
-                        "name": "category",
-                        "in": "query"
+                        "description": "视频分类 UUID",
+                        "name": "category_uuid",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -591,7 +592,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "灵嘚中间件",
-	Description:      "灵嘚中间件（LingDei-Middleware）",
+	Description:      "灵嘚中间件（LingDei-Middleware）是一个基于 Fiber 的 RESTful API 服务，用于提供灵嘚（LingDei）的后端服务。\n注意，有 🦸 标识的接口需要管理员权限才能访问。",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

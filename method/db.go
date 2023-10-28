@@ -24,4 +24,7 @@ func init() {
 
 	// 迁移 schema
 	db.AutoMigrate(&model.Video{})
+	db.AutoMigrate(&model.Category{})
+	db.AutoMigrate(&model.Like{})
+	db.AutoMigrate(&model.Collect{})
 }

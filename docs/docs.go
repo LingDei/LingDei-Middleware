@@ -903,6 +903,9 @@ const docTemplate = `{
                 "uuid": {
                     "type": "string"
                 },
+                "video": {
+                    "$ref": "#/definitions/model.Video"
+                },
                 "video_uuid": {
                     "type": "string"
                 }

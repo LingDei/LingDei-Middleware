@@ -55,6 +55,15 @@ func GetLikeList() ([]model.Like, error) {
 		return nil, err
 	}
 
+	// 给Like列表添加Video信息
+	for i := 0; i < len(likes); i++ {
+		video, err := GetVideo(likes[i].Video_UUID)
+		if err != nil {
+			return nil, err
+		}
+		likes[i].Video = video
+	}
+
 	return likes, nil
 }
 
@@ -94,6 +103,13 @@ func GetLike(video_uuid string, user_uuid string) (model.Like, error) {
 	if err := db.Where("video_uuid = ? AND user_uuid = ?", video_uuid, user_uuid).First(&like).Error; err != nil {
 		return model.Like{}, err
 	}
+
+	// 给Like添加Video信息
+	video, err := GetVideo(like.Video_UUID)
+	if err != nil {
+		return model.Like{}, err
+	}
+	like.Video = video
 
 	return like, nil
 }
@@ -154,6 +170,15 @@ func GetLikeListByUserUUID(user_uuid string) ([]model.Like, error) {
 
 	if err := db.Where("user_uuid = ?", user_uuid).Find(&likes).Error; err != nil {
 		return nil, err
+	}
+
+	// 给Like列表添加Video信息
+	for i := 0; i < len(likes); i++ {
+		video, err := GetVideo(likes[i].Video_UUID)
+		if err != nil {
+			return nil, err
+		}
+		likes[i].Video = video
 	}
 
 	return likes, nil

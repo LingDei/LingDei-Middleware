@@ -3,11 +3,11 @@ package model
 type Video struct {
 	UUID          string `json:"uuid" validate:"required" gorm:"primaryKey"`
 	Name          string `json:"name" validate:"required"`
-	Category_UUID string `json:"category_uuid" validate:"required"`
+	Author_UUID   string `json:"author_uuid" validate:"required" gorm:"type:varchar(191); not null"`
+	Category_UUID string `json:"category_uuid" validate:"required" gorm:"type:varchar(191); not null"`
 	URL           string `json:"url" validate:"required"`
 	Thumbnail_URL string `json:"thumbnail_url" validate:"required"`
 	Views         int    `json:"views" gorm:"default:0"`
-	Author_UUID   string `json:"author_id" validate:"required"`
 }
 
 type VideoResp struct {

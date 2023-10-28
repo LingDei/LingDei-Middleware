@@ -145,7 +145,7 @@ func DeleteLikeHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			video_uuid	query		string	true	"视频UUID"
-//	@Success		200			{object}	model.OperationResp
+//	@Success		200			{object}	model.LikeStatusResp
 //	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/like/check [get]
@@ -157,9 +157,9 @@ func CheckLikeExistHandler(c *fiber.Ctx) error {
 
 	// 检查是否点赞过
 	if flag, err := method.CheckLikeExist(like.Video_UUID, like.User_UUID); flag {
-		return c.JSON(model.OperationResp{
-			Code: 200,
-			Msg:  "已经点赞过了",
+		return c.JSON(model.LikeStatusResp{
+			Code:   200,
+			Status: true,
 		})
 	} else if err != nil {
 		return c.JSON(model.OperationResp{
@@ -168,8 +168,8 @@ func CheckLikeExistHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.JSON(model.OperationResp{
-		Code: 200,
-		Msg:  "还没有点赞",
+	return c.JSON(model.LikeStatusResp{
+		Code:   200,
+		Status: false,
 	})
 }

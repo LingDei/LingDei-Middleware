@@ -217,6 +217,216 @@ const docTemplate = `{
                 }
             }
         },
+        "/like/add": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "给视频点赞",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "点赞管理"
+                ],
+                "summary": "给视频点赞",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频UUID",
+                        "name": "video_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/like/check": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "检查是否点赞过",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "点赞管理"
+                ],
+                "summary": "检查是否点赞过",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频UUID",
+                        "name": "video_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/like/count": {
+            "get": {
+                "description": "获取某个视频的点赞数量",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "点赞管理"
+                ],
+                "summary": "获取某个视频的点赞数量",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频UUID",
+                        "name": "video_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.LikeCountResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.LikeCountResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/like/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "取消点赞",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "点赞管理"
+                ],
+                "summary": "取消点赞",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频UUID",
+                        "name": "video_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/like/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取某位用户自己的点赞列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "点赞管理"
+                ],
+                "summary": "获取某位用户自己的点赞列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户UUID",
+                        "name": "user_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.LikeListResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.LikeListResp"
+                        }
+                    }
+                }
+            }
+        },
         "/video/add": {
             "post": {
                 "security": [
@@ -444,14 +654,14 @@ const docTemplate = `{
         "model.Category": {
             "type": "object",
             "required": [
-                "id",
-                "name"
+                "name",
+                "uuid"
             ],
             "properties": {
-                "id": {
+                "name": {
                     "type": "string"
                 },
-                "name": {
+                "uuid": {
                     "type": "string"
                 }
             }
@@ -481,6 +691,50 @@ const docTemplate = `{
                 }
             }
         },
+        "model.Like": {
+            "type": "object",
+            "required": [
+                "user_uuid",
+                "uuid",
+                "video_uuid"
+            ],
+            "properties": {
+                "user_uuid": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                },
+                "video_uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.LikeCountResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.LikeListResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "like_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Like"
+                    }
+                }
+            }
+        },
         "model.OperationResp": {
             "type": "object",
             "properties": {
@@ -497,19 +751,16 @@ const docTemplate = `{
             "required": [
                 "author_id",
                 "category_uuid",
-                "id",
                 "name",
                 "thumbnail_url",
-                "url"
+                "url",
+                "uuid"
             ],
             "properties": {
                 "author_id": {
                     "type": "string"
                 },
                 "category_uuid": {
-                    "type": "string"
-                },
-                "id": {
                     "type": "string"
                 },
                 "name": {
@@ -519,6 +770,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "url": {
+                    "type": "string"
+                },
+                "uuid": {
                     "type": "string"
                 },
                 "views": {

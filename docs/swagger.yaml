@@ -2,13 +2,13 @@ basePath: /
 definitions:
   model.Category:
     properties:
-      id:
-        type: string
       name:
         type: string
+      uuid:
+        type: string
     required:
-    - id
     - name
+    - uuid
     type: object
   model.CategoryListResp:
     properties:
@@ -26,6 +26,35 @@ definitions:
       code:
         type: integer
     type: object
+  model.Like:
+    properties:
+      user_uuid:
+        type: string
+      uuid:
+        type: string
+      video_uuid:
+        type: string
+    required:
+    - user_uuid
+    - uuid
+    - video_uuid
+    type: object
+  model.LikeCountResp:
+    properties:
+      code:
+        type: integer
+      count:
+        type: integer
+    type: object
+  model.LikeListResp:
+    properties:
+      code:
+        type: integer
+      like_list:
+        items:
+          $ref: '#/definitions/model.Like'
+        type: array
+    type: object
   model.OperationResp:
     properties:
       code:
@@ -39,23 +68,23 @@ definitions:
         type: string
       category_uuid:
         type: string
-      id:
-        type: string
       name:
         type: string
       thumbnail_url:
         type: string
       url:
         type: string
+      uuid:
+        type: string
       views:
         type: integer
     required:
     - author_id
     - category_uuid
-    - id
     - name
     - thumbnail_url
     - url
+    - uuid
     type: object
   model.VideoListResp:
     properties:
@@ -212,6 +241,139 @@ paths:
       summary: "更新分类 \U0001F9B8"
       tags:
       - 分类管理
+  /like/add:
+    post:
+      consumes:
+      - application/json
+      description: 给视频点赞
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 给视频点赞
+      tags:
+      - 点赞管理
+  /like/check:
+    get:
+      consumes:
+      - application/json
+      description: 检查是否点赞过
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 检查是否点赞过
+      tags:
+      - 点赞管理
+  /like/count:
+    get:
+      consumes:
+      - application/json
+      description: 获取某个视频的点赞数量
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LikeCountResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.LikeCountResp'
+      summary: 获取某个视频的点赞数量
+      tags:
+      - 点赞管理
+  /like/delete:
+    delete:
+      consumes:
+      - application/json
+      description: 取消点赞
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 取消点赞
+      tags:
+      - 点赞管理
+  /like/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取某位用户自己的点赞列表
+      parameters:
+      - description: 用户UUID
+        in: query
+        name: user_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LikeListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.LikeListResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取某位用户自己的点赞列表
+      tags:
+      - 点赞管理
   /video/add:
     post:
       consumes:

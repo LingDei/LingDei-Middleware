@@ -55,7 +55,6 @@ func AddCategoryHandler(c *fiber.Ctx) error {
 //	@Produce		json
 //	@Success		200	{object}	model.CategoryListResp
 //	@Failure		400	{object}	model.OperationResp
-//	@Security		ApiKeyAuth
 //	@Router			/category/list [get]
 func GetCategoryListHandler(c *fiber.Ctx) error {
 	// 获取分类列表
@@ -83,7 +82,6 @@ func GetCategoryListHandler(c *fiber.Ctx) error {
 //	@Param			uuid	query		string	true	"分类 UUID"
 //	@Success		200		{object}	model.CategoryResp
 //	@Failure		400		{object}	model.OperationResp
-//	@Security		ApiKeyAuth
 //	@Router			/category/get [get]
 func GetCategoryHandler(c *fiber.Ctx) error {
 	// 获取参数

@@ -103,11 +103,6 @@ const docTemplate = `{
         },
         "/category/get": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "获取分类",
                 "consumes": [
                     "application/json"
@@ -146,11 +141,6 @@ const docTemplate = `{
         },
         "/category/list": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "获取分类列表",
                 "consumes": [
                     "application/json"
@@ -329,11 +319,6 @@ const docTemplate = `{
         },
         "/video/get": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "获取视频",
                 "consumes": [
                     "application/json"
@@ -372,11 +357,6 @@ const docTemplate = `{
         },
         "/video/list": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "获取视频列表",
                 "consumes": [
                     "application/json"

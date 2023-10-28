@@ -74,7 +74,6 @@ func AddVideoHandler(c *fiber.Ctx) error {
 //	@Produce		json
 //	@Success		200	{object}	model.VideoListResp
 //	@Failure		400	{object}	model.OperationResp
-//	@Security		ApiKeyAuth
 //	@Router			/video/list [get]
 func GetVideoListHandler(c *fiber.Ctx) error {
 	// 获取视频列表
@@ -102,7 +101,6 @@ func GetVideoListHandler(c *fiber.Ctx) error {
 //	@Param			uuid	query		string	true	"视频 UUID"
 //	@Success		200		{object}	model.VideoResp
 //	@Failure		400		{object}	model.OperationResp
-//	@Security		ApiKeyAuth
 //	@Router			/video/get [get]
 func GetVideoHandler(c *fiber.Ctx) error {
 	// 获取参数

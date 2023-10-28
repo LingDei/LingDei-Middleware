@@ -159,8 +159,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/model.OperationResp'
-      security:
-      - ApiKeyAuth: []
       summary: 获取分类
       tags:
       - 分类管理
@@ -180,8 +178,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/model.OperationResp'
-      security:
-      - ApiKeyAuth: []
       summary: 获取分类列表
       tags:
       - 分类管理
@@ -302,8 +298,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/model.OperationResp'
-      security:
-      - ApiKeyAuth: []
       summary: 获取视频
       tags:
       - 视频管理
@@ -323,8 +317,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/model.OperationResp'
-      security:
-      - ApiKeyAuth: []
       summary: 获取视频列表
       tags:
       - 视频管理

@@ -111,10 +111,10 @@ func DeleteVideo(uuid string) error {
 }
 
 // 检查Video_uuid是否存在
-func CheckVideoExist(Video_uuid string) error {
+func CheckVideoExist(Video_uuid string) (bool, error) {
 	db, err := getDB()
 	if err != nil {
-		return err
+		return false, err
 	}
 
 	//结束后关闭 DB
@@ -124,10 +124,10 @@ func CheckVideoExist(Video_uuid string) error {
 	var video model.Video
 
 	if err := db.Where("uuid = ?", Video_uuid).First(&video).Error; err != nil {
-		return err
+		return false, err
 	}
 
-	return nil
+	return true, nil
 }
 
 // UpdateVideo 更新Video
@@ -142,7 +142,7 @@ func UpdateVideo(video model.Video) error {
 	defer sqlDB.Close()
 
 	// 检查Video_uuid是否存在
-	if err := CheckVideoExist(video.UUID); err != nil {
+	if flag, err := CheckVideoExist(video.UUID); !flag || err != nil {
 		return err
 	}
 

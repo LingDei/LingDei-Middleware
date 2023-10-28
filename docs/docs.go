@@ -346,49 +346,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/collect/get": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "获取收藏",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "收藏管理"
-                ],
-                "summary": "获取收藏",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "收藏UUID",
-                        "name": "uuid",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.CollectResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/model.OperationResp"
-                        }
-                    }
-                }
-            }
-        },
         "/collect/list": {
             "get": {
                 "security": [
@@ -921,17 +878,6 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.Collect"
                     }
-                }
-            }
-        },
-        "model.CollectResp": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "collect": {
-                    "$ref": "#/definitions/model.Collect"
                 }
             }
         },

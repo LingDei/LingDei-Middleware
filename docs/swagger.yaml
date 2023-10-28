@@ -50,13 +50,6 @@ definitions:
           $ref: '#/definitions/model.Collect'
         type: array
     type: object
-  model.CollectResp:
-    properties:
-      code:
-        type: integer
-      collect:
-        $ref: '#/definitions/model.Collect'
-    type: object
   model.CollectStatusResp:
     properties:
       code:
@@ -367,33 +360,6 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 删除收藏
-      tags:
-      - 收藏管理
-  /collect/get:
-    get:
-      consumes:
-      - application/json
-      description: 获取收藏
-      parameters:
-      - description: 收藏UUID
-        in: query
-        name: uuid
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.CollectResp'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/model.OperationResp'
-      security:
-      - ApiKeyAuth: []
-      summary: 获取收藏
       tags:
       - 收藏管理
   /collect/list:

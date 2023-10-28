@@ -48,8 +48,8 @@ func AddLikeHandler(c *fiber.Ctx) error {
 //	@Tags			点赞管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200			{object}	model.LikeListResp
-//	@Failure		400			{object}	model.LikeListResp
+//	@Success		200	{object}	model.LikeListResp
+//	@Failure		400	{object}	model.LikeListResp
 //	@Security		ApiKeyAuth
 //	@Router			/like/list [get]
 func GetLikeListHandler(c *fiber.Ctx) error {

@@ -5,7 +5,6 @@ type Like struct {
 	UUID       string `json:"uuid" validate:"required" gorm:"primaryKey"`
 	Video_UUID string `json:"video_uuid" validate:"required"`
 	User_UUID  string `json:"user_uuid" validate:"required"`
-	Like       bool   `json:"is_like" validate:"required"`
 }
 
 // LikeResp 点赞响应

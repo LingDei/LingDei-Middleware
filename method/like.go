@@ -23,7 +23,7 @@ func AddLike(like model.Like) error {
 
 	// 检查Video是否存在
 	if flag, err := CheckVideoExist(like.Video_UUID); !flag || err != nil {
-		return errors.New("视频不存在")
+		return errors.New("需要点赞的视频不存在")
 	}
 
 	// 检查video_uuid和user_uuid是否存在

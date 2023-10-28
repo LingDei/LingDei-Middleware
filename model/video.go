@@ -1,7 +1,7 @@
 package model
 
 type Video struct {
-	UUID          string `json:"id" validate:"required" gorm:"primaryKey"`
+	UUID          string `json:"uuid" validate:"required" gorm:"primaryKey"`
 	Name          string `json:"name" validate:"required"`
 	Category_UUID string `json:"category_uuid" validate:"required"`
 	URL           string `json:"url" validate:"required"`

@@ -1,7 +1,7 @@
 package model
 
 type Category struct {
-	UUID string `json:"id" validate:"required" gorm:"primaryKey"`
+	UUID string `json:"uuid" validate:"required" gorm:"primaryKey"`
 	Name string `json:"name" validate:"required"`
 }
 

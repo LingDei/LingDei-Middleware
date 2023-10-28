@@ -48,7 +48,6 @@ func AddLikeHandler(c *fiber.Ctx) error {
 //	@Tags			点赞管理
 //	@Accept			json
 //	@Produce		json
-//	@Param			user_uuid	query		string	true	"用户UUID"
 //	@Success		200			{object}	model.LikeListResp
 //	@Failure		400			{object}	model.LikeListResp
 //	@Security		ApiKeyAuth
@@ -56,7 +55,6 @@ func AddLikeHandler(c *fiber.Ctx) error {
 func GetLikeListHandler(c *fiber.Ctx) error {
 	// 获取参数
 	var like model.Like
-	c.QueryParser(&like)
 	like.User_UUID = method.GetUserFromToken(c).ID
 
 	// 获取Like列表

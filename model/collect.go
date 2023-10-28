@@ -13,6 +13,12 @@ type CollectResp struct {
 	Collect Collect `json:"collect"`
 }
 
+// 收藏状态响应
+type CollectStatusResp struct {
+	Code   int  `json:"code"`
+	Status bool `json:"status"`
+}
+
 // CollectListResp 收藏列表响应
 type CollectListResp struct {
 	Code        int       `json:"code"`

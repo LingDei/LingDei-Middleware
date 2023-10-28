@@ -26,6 +26,7 @@ func regiserService(app *fiber.App) {
 	category := app.Group("/category")
 	video := app.Group("/video")
 	like := app.Group("/like")
+	collect := app.Group("/collect")
 
 	// Category
 	category.Get("/list", handler.GetCategoryListHandler)
@@ -48,12 +49,18 @@ func regiserService(app *fiber.App) {
 
 	// Category
 	category.Post("/add", handler.AddCategoryHandler)
-	category.Delete("/delete", handler.DeleteCategoryHandler)
 	category.Post("/update", handler.UpdateCategoryHandler)
+	category.Delete("/delete", handler.DeleteCategoryHandler)
 
 	// Like
 	like.Post("/add", handler.AddLikeHandler)
 	like.Get("/list", handler.GetLikeListHandler)
-	like.Delete("/delete", handler.DeleteLikeHandler)
 	like.Get("/check", handler.CheckLikeExistHandler)
+	like.Delete("/delete", handler.DeleteLikeHandler)
+
+	// Collect
+	collect.Post("/add", handler.AddCollectHandler)
+	collect.Get("/list", handler.GetCollectListHandler)
+	collect.Get("/check", handler.CheckCollectExistHandler)
+	collect.Delete("/delete", handler.DeleteCollectHandler)
 }

@@ -38,6 +38,33 @@ func AddCollect(collect model.Collect) error {
 	return nil
 }
 
+// GetCollect 获取Collect
+func GetCollect(uuid string) (model.Collect, error) {
+	db, err := getDB()
+	if err != nil {
+		return model.Collect{}, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var collect model.Collect
+
+	if err := db.Where("uuid = ?", uuid).First(&collect).Error; err != nil {
+		return model.Collect{}, err
+	}
+
+	// 给Collect添加Video信息
+	video, err := GetVideo(collect.Video_UUID)
+	if err != nil {
+		return model.Collect{}, err
+	}
+	collect.Video = video
+
+	return collect, nil
+}
+
 // GetCollectList 获取Collect列表
 func GetCollectList() ([]model.Collect, error) {
 	db, err := getDB()
@@ -53,6 +80,15 @@ func GetCollectList() ([]model.Collect, error) {
 
 	if err := db.Find(&collects).Error; err != nil {
 		return nil, err
+	}
+
+	// 给Collect列表添加Video信息
+	for i := 0; i < len(collects); i++ {
+		video, err := GetVideo(collects[i].Video_UUID)
+		if err != nil {
+			return nil, err
+		}
+		collects[i].Video = video
 	}
 
 	return collects, nil
@@ -76,26 +112,6 @@ func GetCollectCount(video_uuid string) (int, error) {
 	}
 
 	return int(count), nil
-}
-
-// GetCollect 获取Collect
-func GetCollect(uuid string) (model.Collect, error) {
-	db, err := getDB()
-	if err != nil {
-		return model.Collect{}, err
-	}
-
-	//结束后关闭 DB
-	sqlDB, _ := db.DB()
-	defer sqlDB.Close()
-
-	var collect model.Collect
-
-	if err := db.Where("uuid = ?", uuid).First(&collect).Error; err != nil {
-		return model.Collect{}, err
-	}
-
-	return collect, nil
 }
 
 // DeleteCollect 删除Collect
@@ -155,6 +171,15 @@ func GetCollectListByUserUUID(user_uuid string) ([]model.Collect, error) {
 
 	if err := db.Where("user_uuid = ?", user_uuid).Find(&collects).Error; err != nil {
 		return nil, err
+	}
+
+	// 给Collect列表添加Video信息
+	for i := 0; i < len(collects); i++ {
+		video, err := GetVideo(collects[i].Video_UUID)
+		if err != nil {
+			return nil, err
+		}
+		collects[i].Video = video
 	}
 
 	return collects, nil

@@ -217,6 +217,169 @@ const docTemplate = `{
                 }
             }
         },
+        "/collect/add": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "收藏视频",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "收藏管理"
+                ],
+                "summary": "收藏视频",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频UUID",
+                        "name": "video_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/collect/check": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "检查是否收藏过",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "收藏管理"
+                ],
+                "summary": "检查是否收藏过",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频UUID",
+                        "name": "video_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.CollectStatusResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/collect/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "删除收藏",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "收藏管理"
+                ],
+                "summary": "删除收藏",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "收藏UUID",
+                        "name": "uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/collect/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取某位用户自己的收藏列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "收藏管理"
+                ],
+                "summary": "获取某位用户自己的收藏列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.CollectListResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
         "/like/add": {
             "post": {
                 "security": [
@@ -291,7 +454,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.OperationResp"
+                            "$ref": "#/definitions/model.LikeStatusResp"
                         }
                     },
                     "400": {
@@ -402,15 +565,6 @@ const docTemplate = `{
                     "点赞管理"
                 ],
                 "summary": "获取某位用户自己的点赞列表",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "用户UUID",
-                        "name": "user_uuid",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -691,6 +845,50 @@ const docTemplate = `{
                 }
             }
         },
+        "model.Collect": {
+            "type": "object",
+            "required": [
+                "user_uuid",
+                "uuid",
+                "video_uuid"
+            ],
+            "properties": {
+                "user_uuid": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                },
+                "video_uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.CollectListResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "collect_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Collect"
+                    }
+                }
+            }
+        },
+        "model.CollectStatusResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
         "model.Like": {
             "type": "object",
             "required": [
@@ -732,6 +930,17 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.Like"
                     }
+                }
+            }
+        },
+        "model.LikeStatusResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
                 }
             }
         },

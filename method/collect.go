@@ -170,10 +170,10 @@ func GetCollectListByVideoUUID(video_uuid string) ([]model.Collect, error) {
 }
 
 // CheckCollectExist 检查Collect是否存在
-func CheckCollectExist(video_uuid string, user_uuid string) error {
+func CheckCollectExist(video_uuid string, user_uuid string) (bool, error) {
 	db, err := getDB()
 	if err != nil {
-		return err
+		return false, err
 	}
 
 	//结束后关闭 DB
@@ -183,8 +183,8 @@ func CheckCollectExist(video_uuid string, user_uuid string) error {
 	var collect model.Collect
 
 	if err := db.Where("video_uuid = ? AND user_uuid = ?", video_uuid, user_uuid).First(&collect).Error; err != nil {
-		return err
+		return false, err
 	}
 
-	return nil
+	return true, nil
 }

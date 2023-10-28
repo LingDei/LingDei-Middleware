@@ -19,6 +19,12 @@ type LikeCountResp struct {
 	Count int `json:"count"`
 }
 
+// 点赞状态响应
+type LikeStatusResp struct {
+	Code   int  `json:"code"`
+	Status bool `json:"status"`
+}
+
 // LikeListResp 点赞列表响应
 type LikeListResp struct {
 	Code     int    `json:"code"`

@@ -22,15 +22,21 @@ func regiserService(app *fiber.App) {
 	// Swagger
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
-	// Category
+	// 注册路由
 	category := app.Group("/category")
+	video := app.Group("/video")
+	like := app.Group("/like")
+
+	// Category
 	category.Get("/list", handler.GetCategoryListHandler)
 	category.Get("/get", handler.GetCategoryHandler)
 
 	// Video
-	video := app.Group("/video")
 	video.Get("/list", handler.GetVideoListHandler)
 	video.Get("/get", handler.GetVideoHandler)
+
+	// Like
+	like.Get("/count", handler.GetLikeCountHandler)
 
 	// 以下为权限控制接口
 	app.Use(jwtConfig)
@@ -44,4 +50,10 @@ func regiserService(app *fiber.App) {
 	category.Post("/add", handler.AddCategoryHandler)
 	category.Delete("/delete", handler.DeleteCategoryHandler)
 	category.Post("/update", handler.UpdateCategoryHandler)
+
+	// Like
+	like.Post("/add", handler.AddLikeHandler)
+	like.Get("/list", handler.GetLikeListHandler)
+	like.Delete("/delete", handler.DeleteLikeHandler)
+	like.Get("/check", handler.CheckLikeExistHandler)
 }

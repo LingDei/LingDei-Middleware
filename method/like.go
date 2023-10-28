@@ -2,6 +2,7 @@ package method
 
 import (
 	"LingDei-Middleware/model"
+	"errors"
 )
 
 // AddLike 添加Like
@@ -18,6 +19,16 @@ func AddLike(like model.Like) error {
 	// 校验数据
 	if err := validate.Struct(like); err != nil {
 		return err
+	}
+
+	// 检查Video是否存在
+	if flag, err := CheckVideoExist(like.Video_UUID); !flag || err != nil {
+		return errors.New("视频不存在")
+	}
+
+	// 检查video_uuid和user_uuid是否存在
+	if flag, _ := CheckLikeExist(like.Video_UUID, like.User_UUID); flag {
+		return errors.New("已经点赞过了")
 	}
 
 	if err := db.Create(&like).Error; err != nil {
@@ -117,8 +128,8 @@ func UpdateLike(like model.Like) error {
 	defer sqlDB.Close()
 
 	// 检查Video_uuid是否存在
-	if err := CheckVideoExist(like.Video_UUID); err != nil {
-		return err
+	if flag, err := CheckVideoExist(like.Video_UUID); !flag || err != nil {
+		return errors.New("视频不存在")
 	}
 
 	if err := db.Model(&like).Where("video_uuid = ? AND user_uuid = ?", like.Video_UUID, like.User_UUID).Updates(&like).Error; err != nil {
@@ -169,10 +180,10 @@ func GetLikeListByVideoUUID(video_uuid string) ([]model.Like, error) {
 }
 
 // CheckLikeExist 检查Like是否存在
-func CheckLikeExist(video_uuid string, user_uuid string) error {
+func CheckLikeExist(video_uuid string, user_uuid string) (bool, error) {
 	db, err := getDB()
 	if err != nil {
-		return err
+		return false, err
 	}
 
 	//结束后关闭 DB
@@ -182,8 +193,8 @@ func CheckLikeExist(video_uuid string, user_uuid string) error {
 	var like model.Like
 
 	if err := db.Where("video_uuid = ? AND user_uuid = ?", video_uuid, user_uuid).First(&like).Error; err != nil {
-		return err
+		return false, err
 	}
 
-	return nil
+	return true, nil
 }

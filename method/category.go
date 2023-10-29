@@ -107,3 +107,23 @@ func UpdateCategory(category model.Category) error {
 
 	return nil
 }
+
+// CheckCategoryExist 检查Category是否存在
+func CheckCategoryExist(uuid string) (bool, error) {
+	db, err := getDB()
+	if err != nil {
+		return false, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var category model.Category
+
+	if err := db.Where("uuid = ?", uuid).First(&category).Error; err != nil {
+		return false, err
+	}
+
+	return true, nil
+}

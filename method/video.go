@@ -3,6 +3,7 @@ package method
 import (
 	"LingDei-Middleware/model"
 	"LingDei-Middleware/utils"
+	"errors"
 	"mime/multipart"
 )
 
@@ -20,6 +21,11 @@ func AddVideo(video model.Video, file_header *multipart.FileHeader) error {
 	// 校验数据
 	if err := validate.Struct(video); err != nil {
 		return err
+	}
+
+	// 检查 category_uuid 是否存在
+	if flag, _ := CheckCategoryExist(video.Category_UUID); !flag {
+		return errors.New("category_uuid 不存在")
 	}
 
 	// file_header to file

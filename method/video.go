@@ -3,7 +3,6 @@ package method
 import (
 	"LingDei-Middleware/model"
 	"LingDei-Middleware/utils"
-	"fmt"
 	"mime/multipart"
 )
 
@@ -146,7 +145,6 @@ func UpdateVideo(video model.Video) error {
 		return err
 	}
 
-	fmt.Println(video)
 	if err := db.Model(&video).Where("uuid = ?", video.UUID).Updates(&video).Error; err != nil {
 		return err
 	}

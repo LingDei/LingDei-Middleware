@@ -21,11 +21,6 @@ func AddCollect(collect model.Collect) error {
 		return err
 	}
 
-	// 检查Video是否存在
-	if flag, err := CheckVideoExist(collect.Video_UUID); !flag || err != nil {
-		return errors.New("需要收藏的视频不存在")
-	}
-
 	// 检查video_uuid和user_uuid是否存在
 	if flag, _ := CheckCollectExist(collect.Video_UUID, collect.User_UUID); flag {
 		return errors.New("已经收藏过了")

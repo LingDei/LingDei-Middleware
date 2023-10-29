@@ -4,6 +4,7 @@ import (
 	"LingDei-Middleware/config"
 	"LingDei-Middleware/method"
 	"LingDei-Middleware/model"
+	"LingDei-Middleware/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -49,6 +50,7 @@ func AddVideoHandler(c *fiber.Ctx) error {
 
 	video.URL = "https://bucket.lingdei.doyi.online/videos/" + video.UUID + ".mp4"
 	video.Thumbnail_URL = "https://bucket.lingdei.doyi.online/frames/" + video.UUID + ".jpg"
+	video.PublishDate = utils.GetDateNow()
 	video.Views = 0
 
 	// 创建 Video

@@ -8,6 +8,7 @@ type Video struct {
 	URL           string `json:"url" validate:"required"`
 	Thumbnail_URL string `json:"thumbnail_url" validate:"required"`
 	Views         int    `json:"views" gorm:"default:0"`
+	PublishDate   string `json:"publish_date" validate:"required"`
 }
 
 type VideoResp struct {

@@ -374,6 +374,274 @@
                 }
             }
         },
+        "/fan/count": {
+            "get": {
+                "description": "获取粉丝数量",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "粉丝管理"
+                ],
+                "summary": "获取粉丝数量",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户UUID",
+                        "name": "follow_uuid",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.FollowCountResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/fan/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取我的粉丝列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "粉丝管理"
+                ],
+                "summary": "获取我的粉丝列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.FollowListResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/follow/add": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "关注用户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "关注管理"
+                ],
+                "summary": "关注用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "被关注用户UUID",
+                        "name": "follow_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/follow/check": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取关注状态",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "关注管理"
+                ],
+                "summary": "获取关注状态",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "被关注用户UUID",
+                        "name": "follow_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.FollowStatusResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.FollowStatusResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/follow/count": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取已关注up主的数量",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "关注管理"
+                ],
+                "summary": "获取已关注up主的数量",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.FollowCountResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/follow/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "取消关注用户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "关注管理"
+                ],
+                "summary": "取消关注用户",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "被关注用户UUID",
+                        "name": "follow_uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/follow/list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取我的关注列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "关注管理"
+                ],
+                "summary": "获取我的关注列表",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.FollowListResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
         "/like/add": {
             "post": {
                 "security": [
@@ -886,6 +1154,64 @@
                 }
             }
         },
+        "model.Follow": {
+            "type": "object",
+            "required": [
+                "follow_uuid",
+                "user_uuid",
+                "uuid"
+            ],
+            "properties": {
+                "follow_uuid": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/model.User"
+                },
+                "user_uuid": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.FollowCountResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.FollowListResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "follow_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Follow"
+                    }
+                }
+            }
+        },
+        "model.FollowStatusResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
         "model.Like": {
             "type": "object",
             "required": [
@@ -955,24 +1281,79 @@
                 }
             }
         },
+        "model.Profile": {
+            "type": "object",
+            "required": [
+                "id",
+                "nickname"
+            ],
+            "properties": {
+                "avatar_url": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string",
+                    "maxLength": 25,
+                    "minLength": 2
+                }
+            }
+        },
+        "model.User": {
+            "type": "object",
+            "required": [
+                "id",
+                "username"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "profile": {
+                    "description": "Profile",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/model.Profile"
+                        }
+                    ]
+                },
+                "role": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 3
+                }
+            }
+        },
         "model.Video": {
             "type": "object",
             "required": [
-                "author_id",
+                "author_uuid",
                 "category_uuid",
                 "name",
+                "publish_date",
                 "thumbnail_url",
                 "url",
                 "uuid"
             ],
             "properties": {
-                "author_id": {
+                "author_uuid": {
                     "type": "string"
                 },
                 "category_uuid": {
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "publish_date": {
                     "type": "string"
                 },
                 "thumbnail_url": {

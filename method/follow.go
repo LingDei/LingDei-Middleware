@@ -21,8 +21,8 @@ func AddFollow(follow model.Follow) error {
 		return err
 	}
 
-	// 检查target_uuid和user_uuid是否存在
-	if flag, _ := CheckLikeExist(follow.Target_UUID, follow.User_UUID); flag {
+	// 检查follow_uuid和user_uuid是否存在
+	if flag, _ := CheckLikeExist(follow.Follow_UUID, follow.User_UUID); flag {
 		return errors.New("已经关注过该用户了")
 	}
 
@@ -52,7 +52,7 @@ func GetFollowListByUserUUID(user_uuid string) ([]model.Follow, error) {
 
 	// 给Follow列表添加Target信息
 	for i := 0; i < len(follows); i++ {
-		target, err := GetUser(follows[i].Target_UUID)
+		target, err := GetUser(follows[i].Follow_UUID)
 		if err != nil {
 			return nil, err
 		}
@@ -62,8 +62,8 @@ func GetFollowListByUserUUID(user_uuid string) ([]model.Follow, error) {
 	return follows, nil
 }
 
-// GetFanListByTargetUUID 获取我的粉丝列表
-func GetFanListByTargetUUID(user_uuid string) ([]model.Follow, error) {
+// GetFanListByFollowUUID 获取我的粉丝列表
+func GetFanListByFollowUUID(user_uuid string) ([]model.Follow, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -75,13 +75,13 @@ func GetFanListByTargetUUID(user_uuid string) ([]model.Follow, error) {
 
 	var follows []model.Follow
 
-	if err := db.Where("target_uuid = ?", user_uuid).Find(&follows).Error; err != nil {
+	if err := db.Where("follow_uuid = ?", user_uuid).Find(&follows).Error; err != nil {
 		return nil, err
 	}
 
 	// 给Follow列表添加Follower信息
 	for i := 0; i < len(follows); i++ {
-		follower, err := GetUser(follows[i].Target_UUID)
+		follower, err := GetUser(follows[i].Follow_UUID)
 		if err != nil {
 			return nil, err
 		}
@@ -92,7 +92,7 @@ func GetFanListByTargetUUID(user_uuid string) ([]model.Follow, error) {
 }
 
 // CheckFollowExist 检查Follow是否存在
-func CheckFollowExist(target_uuid string, user_uuid string) (bool, error) {
+func CheckFollowExist(follow_uuid string, user_uuid string) (bool, error) {
 	db, err := getDB()
 	if err != nil {
 		return false, err
@@ -104,7 +104,7 @@ func CheckFollowExist(target_uuid string, user_uuid string) (bool, error) {
 
 	var follow model.Follow
 
-	if err := db.Where("target_uuid = ? AND user_uuid = ?", target_uuid, user_uuid).First(&follow).Error; err != nil {
+	if err := db.Where("follow_uuid = ? AND user_uuid = ?", follow_uuid, user_uuid).First(&follow).Error; err != nil {
 		return false, err
 	}
 
@@ -112,7 +112,7 @@ func CheckFollowExist(target_uuid string, user_uuid string) (bool, error) {
 }
 
 // DeleteFollow 删除Follow
-func DeleteFollow(target_uuid string, user_uuid string) error {
+func DeleteFollow(follow_uuid string, user_uuid string) error {
 	db, err := getDB()
 	if err != nil {
 		return err
@@ -122,14 +122,14 @@ func DeleteFollow(target_uuid string, user_uuid string) error {
 	sqlDB, _ := db.DB()
 	defer sqlDB.Close()
 
-	if err := db.Where("target_uuid = ? AND user_uuid = ?", target_uuid, user_uuid).Delete(&model.Follow{}).Error; err != nil {
+	if err := db.Where("follow_uuid = ? AND user_uuid = ?", follow_uuid, user_uuid).Delete(&model.Follow{}).Error; err != nil {
 		return err
 	}
 
 	return nil
 }
 
-// GetFollowCount 获取Follow数量
+// GetFollowCount 获取某个用户已关注用户的个数
 func GetFollowCount(user_uuid string) (int, error) {
 	db, err := getDB()
 	if err != nil {
@@ -150,7 +150,7 @@ func GetFollowCount(user_uuid string) (int, error) {
 }
 
 // GetFanCount 获取Fan数量
-func GetFanCount(target_uuid string) (int, error) {
+func GetFanCount(follow_uuid string) (int, error) {
 	db, err := getDB()
 	if err != nil {
 		return 0, err
@@ -162,7 +162,7 @@ func GetFanCount(target_uuid string) (int, error) {
 
 	var count int64
 
-	if err := db.Model(&model.Follow{}).Where("target_uuid = ?", target_uuid).Count(&count).Error; err != nil {
+	if err := db.Model(&model.Follow{}).Where("follow_uuid = ?", follow_uuid).Count(&count).Error; err != nil {
 		return 0, err
 	}
 
@@ -170,7 +170,7 @@ func GetFanCount(target_uuid string) (int, error) {
 }
 
 // GetFollowStatus 获取Follow状态
-func GetFollowStatus(target_uuid string, user_uuid string) (bool, error) {
+func GetFollowStatus(follow_uuid string, user_uuid string) (bool, error) {
 	db, err := getDB()
 	if err != nil {
 		return false, err
@@ -182,7 +182,7 @@ func GetFollowStatus(target_uuid string, user_uuid string) (bool, error) {
 
 	var follow model.Follow
 
-	if err := db.Where("target_uuid = ? AND user_uuid = ?", target_uuid, user_uuid).First(&follow).Error; err != nil {
+	if err := db.Where("follow_uuid = ? AND user_uuid = ?", follow_uuid, user_uuid).First(&follow).Error; err != nil {
 		return false, err
 	}
 

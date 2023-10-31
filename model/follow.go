@@ -3,7 +3,7 @@ package model
 // Follow
 type Follow struct {
 	UUID        string `json:"uuid" validate:"required" gorm:"primaryKey"`
-	Target_UUID string `json:"target_uuid" validate:"required" gorm:"type:varchar(191)"`
+	Follow_UUID string `json:"follow_uuid" validate:"required" gorm:"type:varchar(191)"`
 	User_UUID   string `json:"user_uuid" validate:"required" gorm:"type:varchar(191)"`
 	User        User   `json:"user" gorm:"-"`
 }
@@ -25,6 +25,11 @@ type FollowStatusResp struct {
 }
 
 type FollowListResp struct {
-	Code       int    `json:"code"`
-	FollowList []Like `json:"like_list"`
+	Code       int      `json:"code"`
+	FollowList []Follow `json:"follow_list"`
+}
+
+type FanListResp struct {
+	Code    int      `json:"code"`
+	FanList []Follow `json:"fan_list"`
 }

@@ -27,6 +27,8 @@ func regiserService(app *fiber.App) {
 	video := app.Group("/video")
 	like := app.Group("/like")
 	collect := app.Group("/collect")
+	follow := app.Group("/follow")
+	fan := app.Group("/fan")
 
 	// Category
 	category.Get("/list", handler.GetCategoryListHandler)
@@ -63,4 +65,15 @@ func regiserService(app *fiber.App) {
 	collect.Get("/list", handler.GetCollectListHandler)
 	collect.Get("/check", handler.CheckCollectExistHandler)
 	collect.Delete("/delete", handler.DeleteCollectHandler)
+
+	// Follow
+	follow.Post("/add", handler.AddFollowHandler)
+	follow.Get("/list", handler.GetFollowListHandler)
+	follow.Get("/check", handler.CheckFollowStatusHandler)
+	follow.Delete("/delete", handler.DeleteFollowHandler)
+	follow.Get("/count", handler.GetFollowCountHandler)
+
+	// Fan
+	fan.Get("/list", handler.GetFansHandler)
+	fan.Get("/count", handler.GetFanCountHandler)
 }

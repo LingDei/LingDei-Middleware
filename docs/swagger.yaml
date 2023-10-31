@@ -57,6 +57,44 @@ definitions:
       status:
         type: boolean
     type: object
+  model.Follow:
+    properties:
+      follow_uuid:
+        type: string
+      user:
+        $ref: '#/definitions/model.User'
+      user_uuid:
+        type: string
+      uuid:
+        type: string
+    required:
+    - follow_uuid
+    - user_uuid
+    - uuid
+    type: object
+  model.FollowCountResp:
+    properties:
+      code:
+        type: integer
+      count:
+        type: integer
+    type: object
+  model.FollowListResp:
+    properties:
+      code:
+        type: integer
+      follow_list:
+        items:
+          $ref: '#/definitions/model.Follow'
+        type: array
+    type: object
+  model.FollowStatusResp:
+    properties:
+      code:
+        type: integer
+      status:
+        type: boolean
+    type: object
   model.Like:
     properties:
       user_uuid:
@@ -102,13 +140,49 @@ definitions:
       msg:
         type: string
     type: object
+  model.Profile:
+    properties:
+      avatar_url:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      nickname:
+        maxLength: 25
+        minLength: 2
+        type: string
+    required:
+    - id
+    - nickname
+    type: object
+  model.User:
+    properties:
+      id:
+        type: string
+      profile:
+        allOf:
+        - $ref: '#/definitions/model.Profile'
+        description: Profile
+      role:
+        type: integer
+      username:
+        maxLength: 20
+        minLength: 3
+        type: string
+    required:
+    - id
+    - username
+    type: object
   model.Video:
     properties:
-      author_id:
+      author_uuid:
         type: string
       category_uuid:
         type: string
       name:
+        type: string
+      publish_date:
         type: string
       thumbnail_url:
         type: string
@@ -119,9 +193,10 @@ definitions:
       views:
         type: integer
     required:
-    - author_id
+    - author_uuid
     - category_uuid
     - name
+    - publish_date
     - thumbnail_url
     - url
     - uuid
@@ -383,6 +458,174 @@ paths:
       summary: 获取某位用户自己的收藏列表
       tags:
       - 收藏管理
+  /fan/count:
+    get:
+      consumes:
+      - application/json
+      description: 获取粉丝数量
+      parameters:
+      - description: 用户UUID
+        in: query
+        name: follow_uuid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FollowCountResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      summary: 获取粉丝数量
+      tags:
+      - 粉丝管理
+  /fan/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取我的粉丝列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FollowListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取我的粉丝列表
+      tags:
+      - 粉丝管理
+  /follow/add:
+    post:
+      consumes:
+      - application/json
+      description: 关注用户
+      parameters:
+      - description: 被关注用户UUID
+        in: query
+        name: follow_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 关注用户
+      tags:
+      - 关注管理
+  /follow/check:
+    get:
+      consumes:
+      - application/json
+      description: 获取关注状态
+      parameters:
+      - description: 被关注用户UUID
+        in: query
+        name: follow_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FollowStatusResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.FollowStatusResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取关注状态
+      tags:
+      - 关注管理
+  /follow/count:
+    get:
+      consumes:
+      - application/json
+      description: 获取已关注up主的数量
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FollowCountResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取已关注up主的数量
+      tags:
+      - 关注管理
+  /follow/delete:
+    delete:
+      consumes:
+      - application/json
+      description: 取消关注用户
+      parameters:
+      - description: 被关注用户UUID
+        in: query
+        name: follow_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 取消关注用户
+      tags:
+      - 关注管理
+  /follow/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取我的关注列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FollowListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取我的关注列表
+      tags:
+      - 关注管理
   /like/add:
     post:
       consumes:

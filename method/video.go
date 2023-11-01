@@ -48,7 +48,7 @@ func AddVideo(video model.Video, file_header *multipart.FileHeader) error {
 }
 
 // GetVideoList 获取Video列表
-func GetVideoList() ([]model.Video, error) {
+func GetVideoList(category_uuid string) ([]model.Video, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -60,10 +60,16 @@ func GetVideoList() ([]model.Video, error) {
 
 	var videos []model.Video
 
-	if err := db.Find(&videos).Error; err != nil {
-		return nil, err
+	if category_uuid != "" {
+		if err := db.Find(&videos).Error; err != nil {
+			return nil, err
+		}
+		return videos, nil
 	}
 
+	if err := db.Where("category_uuid = ?", category_uuid).Find(&videos).Error; err != nil {
+		return nil, err
+	}
 	return videos, nil
 }
 

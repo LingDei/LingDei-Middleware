@@ -847,6 +847,11 @@ paths:
       consumes:
       - application/json
       description: 获取视频列表
+      parameters:
+      - description: 视频分类 UUID
+        in: query
+        name: category_uuid
+        type: string
       produces:
       - application/json
       responses:

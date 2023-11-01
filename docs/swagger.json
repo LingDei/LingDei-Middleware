@@ -994,6 +994,14 @@
                     "视频管理"
                 ],
                 "summary": "获取视频列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频分类 UUID",
+                        "name": "category_uuid",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

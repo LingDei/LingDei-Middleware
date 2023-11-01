@@ -74,12 +74,15 @@ func AddVideoHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	model.VideoListResp
-//	@Failure		400	{object}	model.OperationResp
+//	@Param			category_uuid	query		string	false	"视频分类 UUID"
+//	@Success		200				{object}	model.VideoListResp
+//	@Failure		400				{object}	model.OperationResp
 //	@Router			/video/list [get]
 func GetVideoListHandler(c *fiber.Ctx) error {
+	category_uuid := c.Query("category_uuid")
+
 	// 获取视频列表
-	videos, err := method.GetVideoList()
+	videos, err := method.GetVideoList(category_uuid)
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,

@@ -60,7 +60,7 @@ func GetVideoList(category_uuid string) ([]model.Video, error) {
 
 	var videos []model.Video
 
-	if category_uuid != "" {
+	if category_uuid == "" {
 		if err := db.Find(&videos).Error; err != nil {
 			return nil, err
 		}

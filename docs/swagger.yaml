@@ -857,6 +857,10 @@ paths:
       - application/json
       description: 获取视频列表
       parameters:
+      - description: 用户 UUID
+        in: query
+        name: user_uuid
+        type: string
       - description: 视频分类 UUID
         in: query
         name: category_uuid
@@ -873,6 +877,27 @@ paths:
           schema:
             $ref: '#/definitions/model.OperationResp'
       summary: 获取视频列表
+      tags:
+      - 视频管理
+  /video/my_list:
+    get:
+      consumes:
+      - application/json
+      description: 获取我的视频列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.VideoListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取我的视频列表
       tags:
       - 视频管理
   /video/update:

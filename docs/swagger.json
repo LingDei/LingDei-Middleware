@@ -997,11 +997,51 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "用户 UUID",
+                        "name": "user_uuid",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "视频分类 UUID",
                         "name": "category_uuid",
                         "in": "query"
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.VideoListResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/video/my_list": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取我的视频列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频管理"
+                ],
+                "summary": "获取我的视频列表",
                 "responses": {
                     "200": {
                         "description": "OK",

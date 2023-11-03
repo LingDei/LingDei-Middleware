@@ -83,15 +83,44 @@ func GetUploadTokenHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
+//	@Param			user_uuid		query		string	false	"用户 UUID"
 //	@Param			category_uuid	query		string	false	"视频分类 UUID"
 //	@Success		200				{object}	model.VideoListResp
 //	@Failure		400				{object}	model.OperationResp
 //	@Router			/video/list [get]
 func GetVideoListHandler(c *fiber.Ctx) error {
+	user_uuid := c.Query("user_uuid")
 	category_uuid := c.Query("category_uuid")
 
 	// 获取视频列表
-	videos, err := method.GetVideoList(category_uuid)
+	videos, err := method.GetVideoList(category_uuid, user_uuid)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
+	return c.JSON(model.VideoListResp{
+		Code:       200,
+		Video_List: videos,
+	})
+}
+
+// GetMyVideoListHandler 获取我的视频列表
+//
+//	@Summary		获取我的视频列表
+//	@Description	获取我的视频列表
+//	@Tags			视频管理
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	model.VideoListResp
+//	@Failure		400	{object}	model.OperationResp
+//	@Security		ApiKeyAuth
+//	@Router			/video/my_list [get]
+func GetMyVideoListHandler(c *fiber.Ctx) error {
+	// 获取视频列表
+	videos, err := method.GetVideoList("", method.GetUserFromToken(c).ID)
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,

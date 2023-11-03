@@ -7,7 +7,6 @@ import (
 	"LingDei-Middleware/utils"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
 )
 
 // AddDisciplineHandler 添加视频
@@ -17,9 +16,9 @@ import (
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
+//	@Param			uuid			query		string	true	"视频 UUID"
 //	@Param			name			query		string	true	"视频名称"
 //	@Param			category_uuid	query		string	true	"视频分类 UUID"
-//	@Param			file			formData	file	true	"视频文件"
 //	@Success		200				{object}	model.OperationResp
 //	@Failure		400				{object}	model.OperationResp
 //	@Security		ApiKeyAuth
@@ -28,7 +27,6 @@ func AddVideoHandler(c *fiber.Ctx) error {
 	// 获取参数
 	var video model.Video
 	c.QueryParser(&video)
-	video.UUID = uuid.NewString()
 	video.Author_UUID = method.GetUserFromToken(c).ID
 
 	// 上传文件
@@ -74,8 +72,8 @@ func AddVideoHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200				{object}	model.UploadTokenResp
-//	@Failure		400				{object}	model.OperationResp
+//	@Success		200	{object}	model.UploadTokenResp
+//	@Failure		400	{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/upload_token [get]
 func GetUploadTokenHandler(c *fiber.Ctx) error {

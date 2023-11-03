@@ -1146,6 +1146,44 @@
                     }
                 }
             }
+        },
+        "/video/views/add": {
+            "post": {
+                "description": "添加视频播放量",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频管理"
+                ],
+                "summary": "添加视频播放量",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频 UUID",
+                        "name": "uuid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

@@ -29,6 +29,7 @@ func regiserService(app *fiber.App) {
 	collect := app.Group("/collect")
 	follow := app.Group("/follow")
 	fan := app.Group("/fan")
+	video_views := video.Group("/views")
 
 	// Category
 	category.Get("/list", handler.GetCategoryListHandler)
@@ -40,6 +41,9 @@ func regiserService(app *fiber.App) {
 
 	// Like
 	like.Get("/count", handler.GetLikeCountHandler)
+
+	// Video
+	video_views.Post("/add", handler.AddVideoViewsCountHandler)
 
 	// 以下为权限控制接口
 	app.Use(jwtConfig)

@@ -236,3 +236,39 @@ func UpdateVideoHandler(c *fiber.Ctx) error {
 		Msg:  "ok",
 	})
 }
+
+// AddVideoViewsCountHandler 添加视频播放量
+//
+//	@Summary		添加视频播放量
+//	@Description	添加视频播放量
+//	@Tags			视频管理
+//	@Accept			json
+//	@Produce		json
+//	@Param			uuid	query		string	true	"视频 UUID"
+//	@Success		200		{object}	model.OperationResp
+//	@Failure		400		{object}	model.OperationResp
+//	@Router			/video/views/add [post]
+func AddVideoViewsCountHandler(c *fiber.Ctx) error {
+	// 获取参数
+	uuid := c.FormValue("uuid")
+
+	if uuid == "" {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  "视频 UUID 不能为空",
+		})
+	}
+
+	// 添加视频播放量
+	if err := method.AddVideoViewsCount(uuid); err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
+	return c.JSON(model.OperationResp{
+		Code: 200,
+		Msg:  "ok",
+	})
+}

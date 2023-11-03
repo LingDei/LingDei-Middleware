@@ -174,3 +174,27 @@ func GetVideoListByUserUUID(user_uuid string) ([]model.Video, error) {
 
 	return videos, nil
 }
+
+// AddVideoViewsCount 添加视频播放量
+func AddVideoViewsCount(uuid string) error {
+	db, err := getDB()
+	if err != nil {
+		return err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var video model.Video
+
+	if err := db.Where("uuid = ?", uuid).First(&video).Error; err != nil {
+		return err
+	}
+
+	if err := db.Model(&video).Where("uuid = ?", uuid).Update("views", video.Views+1).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

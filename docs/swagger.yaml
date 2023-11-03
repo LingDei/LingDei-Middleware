@@ -956,6 +956,31 @@ paths:
       summary: 获取上传凭证
       tags:
       - 视频管理
+  /video/views/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加视频播放量
+      parameters:
+      - description: 视频 UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      summary: 添加视频播放量
+      tags:
+      - 视频管理
 securityDefinitions:
   ApiKeyAuth:
     in: header

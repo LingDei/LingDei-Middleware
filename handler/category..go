@@ -29,7 +29,7 @@ func AddCategoryHandler(c *fiber.Ctx) error {
 
 	// 获取参数
 	var category model.Category
-	c.QueryParser(&category)
+	c.BodyParser(&category)
 	category.UUID = uuid.NewString()
 
 	// 创建 Category
@@ -158,7 +158,7 @@ func UpdateCategoryHandler(c *fiber.Ctx) error {
 
 	// 获取参数
 	var category model.Category
-	c.QueryParser(&category)
+	c.BodyParser(&category)
 
 	// 更新分类
 	if err := method.UpdateCategory(category); err != nil {

@@ -23,7 +23,7 @@ import (
 func AddCollectHandler(c *fiber.Ctx) error {
 	// 获取参数
 	var collect model.Collect
-	c.QueryParser(&collect)
+	c.BodyParser(&collect)
 	collect.UUID = uuid.NewString()
 	collect.User_UUID = method.GetUserFromToken(c).ID
 

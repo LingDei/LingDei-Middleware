@@ -23,7 +23,7 @@ import (
 func AddLikeHandler(c *fiber.Ctx) error {
 	// 获取参数
 	var like model.Like
-	c.QueryParser(&like)
+	c.BodyParser(&like)
 	like.UUID = uuid.NewString()
 	like.User_UUID = method.GetUserFromToken(c).ID
 

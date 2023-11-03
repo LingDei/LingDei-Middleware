@@ -26,7 +26,7 @@ import (
 func AddVideoHandler(c *fiber.Ctx) error {
 	// 获取参数
 	var video model.Video
-	c.QueryParser(&video)
+	c.BodyParser(&video)
 	video.Author_UUID = method.GetUserFromToken(c).ID
 
 	video.URL = "https://bucket.lingdei.doyi.online/videos/" + video.UUID + ".mp4"
@@ -192,7 +192,7 @@ func UpdateVideoHandler(c *fiber.Ctx) error {
 
 	// 获取参数
 	var video model.Video
-	c.QueryParser(&video)
+	c.BodyParser(&video)
 
 	// 更新视频
 	if err := method.UpdateVideo(video); err != nil {

@@ -23,7 +23,7 @@ import (
 func AddFollowHandler(c *fiber.Ctx) error {
 	// 获取参数
 	var follow model.Follow
-	c.QueryParser(&follow)
+	c.BodyParser(&follow)
 	follow.UUID = uuid.NewString()
 	follow.User_UUID = method.GetUserFromToken(c).ID
 

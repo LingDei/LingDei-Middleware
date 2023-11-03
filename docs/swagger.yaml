@@ -156,6 +156,13 @@ definitions:
     - id
     - nickname
     type: object
+  model.UploadTokenResp:
+    properties:
+      code:
+        type: integer
+      upload_token:
+        type: string
+    type: object
   model.User:
     properties:
       id:
@@ -899,6 +906,27 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: "更新视频 \U0001F9B8"
+      tags:
+      - 视频管理
+  /video/upload_token:
+    get:
+      consumes:
+      - application/json
+      description: 获取上传凭证
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UploadTokenResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取上传凭证
       tags:
       - 视频管理
 securityDefinitions:

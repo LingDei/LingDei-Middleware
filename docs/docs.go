@@ -1078,6 +1078,40 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/video/upload_token": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "获取上传凭证",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频管理"
+                ],
+                "summary": "获取上传凭证",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.UploadTokenResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1315,6 +1349,17 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 25,
                     "minLength": 2
+                }
+            }
+        },
+        "model.UploadTokenResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "upload_token": {
+                    "type": "string"
                 }
             }
         },

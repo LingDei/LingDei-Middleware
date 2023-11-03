@@ -67,6 +67,33 @@ func AddVideoHandler(c *fiber.Ctx) error {
 	})
 }
 
+// GetUploadTokenHandler 获取上传凭证
+//
+//	@Summary		获取上传凭证
+//	@Description	获取上传凭证
+//	@Tags			视频管理
+//	@Accept			json
+//	@Produce		json
+//	@Success		200				{object}	model.UploadTokenResp
+//	@Failure		400				{object}	model.OperationResp
+//	@Security		ApiKeyAuth
+//	@Router			/video/upload_token [get]
+func GetUploadTokenHandler(c *fiber.Ctx) error {
+	// 获取上传凭证
+	upload_token, err := utils.GetUploadToken()
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
+	return c.JSON(model.UploadTokenResp{
+		Code:         200,
+		Upload_Token: upload_token,
+	})
+}
+
 // GetVideoListHandler 获取视频列表
 //
 //	@Summary		获取视频列表

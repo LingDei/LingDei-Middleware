@@ -48,6 +48,7 @@ func regiserService(app *fiber.App) {
 	video.Post("/add", handler.AddVideoHandler)
 	video.Post("/update", handler.UpdateVideoHandler)
 	video.Delete("/delete", handler.DeleteVideoHandler)
+	video.Get("/upload_token", handler.GetUploadTokenHandler)
 
 	// Category
 	category.Post("/add", handler.AddCategoryHandler)

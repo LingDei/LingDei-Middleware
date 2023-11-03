@@ -28,6 +28,19 @@ func getBucketManager() (*storage.BucketManager, error) {
 	return storage.NewBucketManager(mac, &cfg), nil
 }
 
+// 获取上传凭证
+func GetUploadToken() (string, error) {
+	bucket_manager, err := getBucketManager()
+	if err != nil {
+		return "", err
+	}
+
+	putPolicy := storage.PutPolicy{
+		Scope: config.QINIU_BUCKET,
+	}
+	return putPolicy.UploadToken(bucket_manager.Mac), nil
+}
+
 // UploadFile 文件上传（分片）
 func UploadFileByPieces(key string, file io.Reader) error {
 	bucket_manager, err := getBucketManager()

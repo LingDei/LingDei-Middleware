@@ -21,3 +21,8 @@ type VideoListResp struct {
 	Code       int     `json:"code"`
 	Video_List []Video `json:"video_list"`
 }
+
+type UploadTokenResp struct {
+	Code         int    `json:"code"`
+	Upload_Token string `json:"upload_token"`
+}

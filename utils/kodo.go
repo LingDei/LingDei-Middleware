@@ -39,7 +39,7 @@ func GetUploadToken() (string, string, error) {
 	video_uuid := uuid.NewString()
 
 	putPolicy := storage.PutPolicy{
-		Scope: fmt.Sprintf("%s:%s", config.QINIU_BUCKET, "videos/"+video_uuid),
+		Scope: fmt.Sprintf("%s:%s", config.QINIU_BUCKET, "videos/"+video_uuid+".mp4"),
 	}
 
 	return video_uuid, putPolicy.UploadToken(bucket_manager.Mac), nil

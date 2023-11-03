@@ -80,7 +80,7 @@ func AddVideoHandler(c *fiber.Ctx) error {
 //	@Router			/video/upload_token [get]
 func GetUploadTokenHandler(c *fiber.Ctx) error {
 	// 获取上传凭证
-	upload_token, err := utils.GetUploadToken()
+	video_uuid, upload_token, err := utils.GetUploadToken()
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,
@@ -90,6 +90,7 @@ func GetUploadTokenHandler(c *fiber.Ctx) error {
 
 	return c.JSON(model.UploadTokenResp{
 		Code:         200,
+		Video_UUID:   video_uuid,
 		Upload_Token: upload_token,
 	})
 }

@@ -1360,6 +1360,9 @@ const docTemplate = `{
                 },
                 "upload_token": {
                     "type": "string"
+                },
+                "video_uuid": {
+                    "type": "string"
                 }
             }
         },

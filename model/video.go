@@ -24,5 +24,6 @@ type VideoListResp struct {
 
 type UploadTokenResp struct {
 	Code         int    `json:"code"`
+	Video_UUID   string `json:"video_uuid"`
 	Upload_Token string `json:"upload_token"`
 }

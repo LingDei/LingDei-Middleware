@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/google/uuid"
 	"github.com/qiniu/go-sdk/v7/auth/qbox"
 	"github.com/qiniu/go-sdk/v7/storage"
 )
@@ -29,16 +30,19 @@ func getBucketManager() (*storage.BucketManager, error) {
 }
 
 // 获取上传凭证
-func GetUploadToken() (string, error) {
+func GetUploadToken() (string, string, error) {
 	bucket_manager, err := getBucketManager()
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
+	video_uuid := uuid.NewString()
+
 	putPolicy := storage.PutPolicy{
-		Scope: config.QINIU_BUCKET,
+		Scope: fmt.Sprintf("%s:%s", config.QINIU_BUCKET, video_uuid),
 	}
-	return putPolicy.UploadToken(bucket_manager.Mac), nil
+
+	return video_uuid, putPolicy.UploadToken(bucket_manager.Mac), nil
 }
 
 // UploadFile 文件上传（分片）

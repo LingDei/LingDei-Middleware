@@ -768,6 +768,11 @@ paths:
       - application/json
       description: 添加视频
       parameters:
+      - description: 视频 UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
       - description: 视频名称
         in: query
         name: name
@@ -778,11 +783,6 @@ paths:
         name: category_uuid
         required: true
         type: string
-      - description: 视频文件
-        in: formData
-        name: file
-        required: true
-        type: file
       produces:
       - application/json
       responses:

@@ -870,6 +870,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "视频 UUID",
+                        "name": "uuid",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "视频名称",
                         "name": "name",
                         "in": "query",
@@ -880,13 +887,6 @@ const docTemplate = `{
                         "description": "视频分类 UUID",
                         "name": "category_uuid",
                         "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "file",
-                        "description": "视频文件",
-                        "name": "file",
-                        "in": "formData",
                         "required": true
                     }
                 ],

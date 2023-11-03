@@ -4,11 +4,10 @@ import (
 	"LingDei-Middleware/model"
 	"LingDei-Middleware/utils"
 	"errors"
-	"mime/multipart"
 )
 
 // AddVideo 添加Video
-func AddVideo(video model.Video, file_header *multipart.FileHeader) error {
+func AddVideo(video model.Video) error {
 	db, err := getDB()
 	if err != nil {
 		return err
@@ -26,18 +25,6 @@ func AddVideo(video model.Video, file_header *multipart.FileHeader) error {
 	// 检查 category_uuid 是否存在
 	if flag, _ := CheckCategoryExist(video.Category_UUID); !flag {
 		return errors.New("category_uuid 不存在")
-	}
-
-	// file_header to file
-	file, err := file_header.Open()
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	// 上传视频
-	if err := utils.UploadFileByPieces("videos/"+video.UUID+".mp4", file); err != nil {
-		return err
 	}
 
 	if err := db.Create(&video).Error; err != nil {

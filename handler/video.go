@@ -29,30 +29,13 @@ func AddVideoHandler(c *fiber.Ctx) error {
 	c.QueryParser(&video)
 	video.Author_UUID = method.GetUserFromToken(c).ID
 
-	// 上传文件
-	file, err := c.FormFile("file")
-	if err != nil {
-		return c.JSON(model.OperationResp{
-			Code: 400,
-			Msg:  err.Error(),
-		})
-	}
-
-	// 检查文件类型
-	if file.Header["Content-Type"][0] != "video/mp4" {
-		return c.JSON(model.OperationResp{
-			Code: 400,
-			Msg:  "请上传 mp4 格式的视频文件",
-		})
-	}
-
 	video.URL = "https://bucket.lingdei.doyi.online/videos/" + video.UUID + ".mp4"
 	video.Thumbnail_URL = "https://bucket.lingdei.doyi.online/frames/" + video.UUID + ".jpg"
 	video.PublishDate = utils.GetDateNow()
 	video.Views = 0
 
 	// 创建 Video
-	if err := method.AddVideo(video, file); err != nil {
+	if err := method.AddVideo(video); err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,
 			Msg:  err.Error(),

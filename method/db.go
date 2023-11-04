@@ -32,6 +32,8 @@ func init() {
 	db.AutoMigrate(&model.Like{})
 	db.AutoMigrate(&model.Collect{})
 	db.AutoMigrate(&model.Follow{})
+	db.AutoMigrate(&model.Comment{})
+	db.AutoMigrate(&model.Barrage{})
 
 	// 执行原生 SQL 以创建外键
 	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.videos ADD CONSTRAINT fk_users_video FOREIGN KEY (author_uuid) REFERENCES ` + config.DB_NAME + `.users (id) ON DELETE CASCADE ON UPDATE CASCADE;`)

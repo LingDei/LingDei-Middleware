@@ -41,4 +41,10 @@ func init() {
 	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.likes ADD CONSTRAINT fk_videos_like FOREIGN KEY (video_uuid) REFERENCES ` + config.DB_NAME + `.videos (uuid) ON DELETE CASCADE ON UPDATE CASCADE;`)
 	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.collects ADD CONSTRAINT fk_users_collect FOREIGN KEY (user_uuid) REFERENCES ` + config.DB_NAME + `.users (id) ON DELETE CASCADE ON UPDATE CASCADE;`)
 	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.collects ADD CONSTRAINT fk_videos_collect FOREIGN KEY (video_uuid) REFERENCES ` + config.DB_NAME + `.videos (uuid) ON DELETE CASCADE ON UPDATE CASCADE;`)
+	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.follows ADD CONSTRAINT fk_users_follow FOREIGN KEY (user_uuid) REFERENCES ` + config.DB_NAME + `.users (id) ON DELETE CASCADE ON UPDATE CASCADE;`)
+	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.follows ADD CONSTRAINT fk_follows_follow FOREIGN KEY (follow_uuid) REFERENCES ` + config.DB_NAME + `.users (id) ON DELETE CASCADE ON UPDATE CASCADE;`)
+	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.comments ADD CONSTRAINT fk_users_comment FOREIGN KEY (user_uuid) REFERENCES ` + config.DB_NAME + `.users (id) ON DELETE CASCADE ON UPDATE CASCADE;`)
+	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.comments ADD CONSTRAINT fk_videos_comment FOREIGN KEY (video_uuid) REFERENCES ` + config.DB_NAME + `.videos (uuid) ON DELETE CASCADE ON UPDATE CASCADE;`)
+	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.barrages ADD CONSTRAINT fk_users_barrage FOREIGN KEY (user_uuid) REFERENCES ` + config.DB_NAME + `.users (id) ON DELETE CASCADE ON UPDATE CASCADE;`)
+	db.Exec(`ALTER TABLE ` + config.DB_NAME + `.barrages ADD CONSTRAINT fk_videos_barrage FOREIGN KEY (video_uuid) REFERENCES ` + config.DB_NAME + `.videos (uuid) ON DELETE CASCADE ON UPDATE CASCADE;`)
 }

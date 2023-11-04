@@ -6,7 +6,7 @@ type Comment struct {
 	Video_UUID string `json:"video_uuid" validate:"required" gorm:"type:varchar(191)"`
 	User_UUID  string `json:"user_uuid" validate:"required" gorm:"type:varchar(191)"`
 	Content    string `json:"content" validate:"required"`
-	Timestamp  int64  `json:"timestamp" validate:"required" gorm:"type:timestamp"`
+	Timestamp  int64  `json:"timestamp" validate:"required" gorm:"type:bigint"`
 }
 
 // CommentListResp 评论列表响应

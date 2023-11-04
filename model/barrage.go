@@ -7,7 +7,7 @@ type Barrage struct {
 	User_UUID  string `json:"user_uuid" validate:"required" gorm:"type:varchar(191)"`
 	Content    string `json:"content" validate:"required"`
 	Second     int64  `json:"second" validate:"required" gorm:"type:bigint"`
-	Timestamp  int64  `json:"timestamp" validate:"required" gorm:"type:timestamp"`
+	Timestamp  int64  `json:"timestamp" validate:"required" gorm:"type:bigint"`
 }
 
 // BarrageListResp 弹幕列表响应

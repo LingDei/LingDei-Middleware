@@ -7,7 +7,7 @@ type Comment struct {
 	User_UUID  string  `json:"user_uuid" validate:"required" gorm:"type:varchar(191)"`
 	Content    string  `json:"content" validate:"required"`
 	Timestamp  int64   `json:"timestamp" validate:"required" gorm:"type:bigint"`
-	Profile    Profile `json:"profile" gorm:"-"`
+	Profile    Profile `json:"profile" validate:"-" gorm:"-"`
 }
 
 // CommentListResp 评论列表响应

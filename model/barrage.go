@@ -9,21 +9,3 @@ type Barrage struct {
 	Second     int64  `json:"second" validate:"required" gorm:"type:bigint"`
 	Timestamp  int64  `json:"timestamp" validate:"required" gorm:"type:timestamp"`
 }
-
-// BarrageListResp 弹幕列表响应
-type BarrageListResp struct {
-	Code        int       `json:"code"`
-	BarrageList []Barrage `json:"barrage_list"`
-}
-
-// BarrageResp 弹幕响应
-type BarrageResp struct {
-	Code    int     `json:"code"`
-	Barrage Barrage `json:"barrage"`
-}
-
-// BarrageCountResp 弹幕数量响应
-type BarrageCountResp struct {
-	Code  int `json:"code"`
-	Count int `json:"count"`
-}

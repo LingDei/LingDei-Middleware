@@ -272,3 +272,30 @@ func AddVideoViewsCountHandler(c *fiber.Ctx) error {
 		Msg:  "ok",
 	})
 }
+
+// GetMyFollowVideos 获取我关注的用户的视频
+//
+//	@Summary		获取我关注的用户的视频
+//	@Description	获取我关注的用户的视频
+//	@Tags			视频管理
+//	@Accept			json
+//	@Produce		json
+//	@Success		200		{object}	model.VideoListResp
+//	@Failure		400		{object}	model.OperationResp
+//	@Security		ApiKeyAuth
+//	@Router			/video/follow_list [get]
+func GetMyFollowVideos(c *fiber.Ctx) error {
+	// 获取视频列表
+	videos, err := method.GetFollowVideos(method.GetUserFromToken(c).ID)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
+	return c.JSON(model.VideoListResp{
+		Code:       200,
+		Video_List: videos,
+	})
+}

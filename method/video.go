@@ -198,3 +198,34 @@ func AddVideoViewsCount(uuid string) error {
 
 	return nil
 }
+
+// GetFollowVideos 获取我关注的用户的视频
+func GetFollowVideos(user_uuid string) ([]model.Video, error) {
+	db, err := getDB()
+	if err != nil {
+		return nil, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var followList []model.Follow
+	var videoList []model.Video
+
+	if err := db.Where("user_uuid = ?", user_uuid).Find(&followList).Error; err != nil {
+		return nil, err
+	}
+
+	for _, follow := range followList {
+		var video model.Video
+
+		if err := db.Where("author_uuid = ?", follow.Follow_UUID).Find(&video).Error; err != nil {
+			return nil, err
+		}
+
+		videoList = append(videoList, video)
+	}
+
+	return videoList, nil
+}

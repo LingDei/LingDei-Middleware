@@ -826,6 +826,27 @@ paths:
       summary: "删除视频 \U0001F9B8"
       tags:
       - 视频管理
+  /video/follow_list:
+    get:
+      consumes:
+      - application/json
+      description: 获取我关注的用户的视频
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.VideoListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取我关注的用户的视频
+      tags:
+      - 视频管理
   /video/get:
     get:
       consumes:

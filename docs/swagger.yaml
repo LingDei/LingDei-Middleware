@@ -1,5 +1,50 @@
 basePath: /
 definitions:
+  model.Barrage:
+    properties:
+      content:
+        type: string
+      second:
+        type: integer
+      timestamp:
+        type: integer
+      user_uuid:
+        type: string
+      uuid:
+        type: string
+      video_uuid:
+        type: string
+    required:
+    - content
+    - second
+    - timestamp
+    - user_uuid
+    - uuid
+    - video_uuid
+    type: object
+  model.BarrageCountResp:
+    properties:
+      code:
+        type: integer
+      count:
+        type: integer
+    type: object
+  model.BarrageListResp:
+    properties:
+      barrage_list:
+        items:
+          $ref: '#/definitions/model.Barrage'
+        type: array
+      code:
+        type: integer
+    type: object
+  model.BarrageResp:
+    properties:
+      barrage:
+        $ref: '#/definitions/model.Barrage'
+      code:
+        type: integer
+    type: object
   model.Category:
     properties:
       name:
@@ -56,6 +101,48 @@ definitions:
         type: integer
       status:
         type: boolean
+    type: object
+  model.Comment:
+    properties:
+      content:
+        type: string
+      timestamp:
+        type: integer
+      user_uuid:
+        type: string
+      uuid:
+        type: string
+      video_uuid:
+        type: string
+    required:
+    - content
+    - timestamp
+    - user_uuid
+    - uuid
+    - video_uuid
+    type: object
+  model.CommentCountResp:
+    properties:
+      code:
+        type: integer
+      count:
+        type: integer
+    type: object
+  model.CommentListResp:
+    properties:
+      code:
+        type: integer
+      comment_list:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+    type: object
+  model.CommentResp:
+    properties:
+      code:
+        type: integer
+      comment:
+        $ref: '#/definitions/model.Comment'
     type: object
   model.Follow:
     properties:
@@ -236,6 +323,145 @@ info:
   title: 灵嘚中间件
   version: v1.0.0
 paths:
+  /barrage/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加Barrage
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      - description: 弹幕内容
+        in: query
+        name: content
+        required: true
+        type: string
+      - description: 弹幕秒数
+        in: query
+        name: second
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加Barrage
+      tags:
+      - 弹幕管理
+  /barrage/count:
+    get:
+      consumes:
+      - application/json
+      description: 获取Barrage数量
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BarrageCountResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      summary: 获取Barrage数量
+      tags:
+      - 弹幕管理
+  /barrage/delete:
+    delete:
+      consumes:
+      - application/json
+      description: 删除Barrage
+      parameters:
+      - description: 弹幕UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除Barrage
+      tags:
+      - 弹幕管理
+  /barrage/get:
+    get:
+      consumes:
+      - application/json
+      description: 获取Barrage
+      parameters:
+      - description: 弹幕UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BarrageResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      summary: 获取Barrage
+      tags:
+      - 弹幕管理
+  /barrage/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取Barrage列表
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BarrageListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      summary: 获取Barrage列表
+      tags:
+      - 弹幕管理
   /category/add:
     post:
       consumes:
@@ -467,6 +693,140 @@ paths:
       summary: 获取某位用户自己的收藏列表
       tags:
       - 收藏管理
+  /comment/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加Comment
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      - description: 评论内容
+        in: query
+        name: content
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加Comment
+      tags:
+      - 评论管理
+  /comment/count:
+    get:
+      consumes:
+      - application/json
+      description: 获取Comment数量
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CommentCountResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.CommentCountResp'
+      summary: 获取Comment数量
+      tags:
+      - 评论管理
+  /comment/delete:
+    delete:
+      consumes:
+      - application/json
+      description: 删除Comment
+      parameters:
+      - description: 评论UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除Comment
+      tags:
+      - 评论管理
+  /comment/get:
+    get:
+      consumes:
+      - application/json
+      description: 获取Comment
+      parameters:
+      - description: 评论UUID
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CommentResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      summary: 获取Comment
+      tags:
+      - 评论管理
+  /comment/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取Comment列表
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CommentListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.CommentListResp'
+      summary: 获取Comment列表
+      tags:
+      - 评论管理
   /fan/count:
     get:
       consumes:

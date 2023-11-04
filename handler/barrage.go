@@ -53,8 +53,8 @@ func AddBarrageHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			video_uuid	query		string	true	"视频UUID"
-//	@Success		200			{object}	model.OperationResp
-//	@Failure		400			{object}	model.BarrageListResp
+//	@Success		200			{object}	model.BarrageListResp
+//	@Failure		400			{object}	model.OperationResp
 //	@Router			/barrage/list [get]
 func GetBarrageListHandler(c *fiber.Ctx) error {
 	// 获取参数
@@ -83,8 +83,8 @@ func GetBarrageListHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			video_uuid	query		string	true	"视频UUID"
-//	@Success		200			{object}	model.OperationResp
-//	@Failure		400			{object}	model.BarrageCountResp
+//	@Success		200			{object}	model.BarrageCountResp
+//	@Failure		400			{object}	model.OperationResp
 //	@Router			/barrage/count [get]
 func GetBarrageCountHandler(c *fiber.Ctx) error {
 	// 获取参数
@@ -113,8 +113,8 @@ func GetBarrageCountHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			uuid	query		string	true	"弹幕UUID"
-//	@Success		200			{object}	model.OperationResp
-//	@Failure		400			{object}	model.BarrageResp
+//	@Success		200		{object}	model.BarrageResp
+//	@Failure		400		{object}	model.OperationResp
 //	@Router			/barrage/get [get]
 func GetBarrageHandler(c *fiber.Ctx) error {
 	// 获取参数
@@ -143,8 +143,8 @@ func GetBarrageHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			uuid	query		string	true	"弹幕UUID"
-//	@Success		200			{object}	model.OperationResp
-//	@Failure		400			{object}	model.OperationResp
+//	@Success		200		{object}	model.OperationResp
+//	@Failure		400		{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/barrage/delete [delete]
 func DeleteBarrageHandler(c *fiber.Ctx) error {

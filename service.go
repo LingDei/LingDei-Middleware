@@ -48,10 +48,12 @@ func regiserService(app *fiber.App) {
 	video_views.Post("/add", handler.AddVideoViewsCountHandler)
 
 	// Comment
+	comment.Get("/get", handler.GetCommentHandler)
 	comment.Get("/list", handler.GetCommentListHandler)
 	comment.Get("/count", handler.GetCommentCountHandler)
 
 	// Barrage
+	barrage.Get("/get", handler.GetBarrageHandler)
 	barrage.Get("/list", handler.GetBarrageListHandler)
 	barrage.Get("/count", handler.GetBarrageCountHandler)
 

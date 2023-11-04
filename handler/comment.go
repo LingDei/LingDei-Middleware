@@ -52,8 +52,8 @@ func AddCommentHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			video_uuid	query		string	true	"视频UUID"
-//	@Success		200			{object}	CommentListResp
-//	@Failure		400			{object}	CommentListResp
+//	@Success		200			{object}	model.CommentListResp
+//	@Failure		400			{object}	model.CommentListResp
 //	@Router			/comment/list [get]
 func GetCommentListHandler(c *fiber.Ctx) error {
 	// 获取参数
@@ -82,8 +82,8 @@ func GetCommentListHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			video_uuid	query		string	true	"视频UUID"
-//	@Success		200			{object}	CommentCountResp
-//	@Failure		400			{object}	CommentCountResp
+//	@Success		200			{object}	model.CommentCountResp
+//	@Failure		400			{object}	model.CommentCountResp
 //	@Router			/comment/count [get]
 func GetCommentCountHandler(c *fiber.Ctx) error {
 	// 获取参数
@@ -139,5 +139,35 @@ func DeleteCommentHandler(c *fiber.Ctx) error {
 	return c.JSON(model.OperationResp{
 		Code: 200,
 		Msg:  "删除评论成功",
+	})
+}
+
+// GetCommentHandler 获取Comment
+//
+//	@Summary		获取Comment
+//	@Description	获取Comment
+//	@Tags			评论管理
+//	@Accept			json
+//	@Produce		json
+//	@Param			uuid	query		string	true	"评论UUID"
+//	@Success		200		{object}	model.CommentResp
+//	@Failure		400		{object}	model.OperationResp
+//	@Router			/comment/get [get]
+func GetCommentHandler(c *fiber.Ctx) error {
+	// 获取参数
+	uuid := c.Query("uuid")
+
+	// 获取 Comment
+	comment, err := method.GetComment(uuid)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
+	return c.JSON(model.CommentResp{
+		Code:    200,
+		Comment: comment,
 	})
 }

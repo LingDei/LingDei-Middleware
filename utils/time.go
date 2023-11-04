@@ -16,5 +16,5 @@ func GetDateNow() string {
 
 // GetTimestamp 获取当前时间戳
 func GetTimestamp() int64 {
-	return time.Now().Unix()
+	return time.Now().UnixMilli()
 }

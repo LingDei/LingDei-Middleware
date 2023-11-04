@@ -44,6 +44,16 @@ func GetCommentList(video_uuid string) ([]model.Comment, error) {
 		return nil, err
 	}
 
+	// 补充 User Profile 信息
+	for i := 0; i < len(comments); i++ {
+		profile, err := GetProfile(comments[i].User_UUID)
+		if err != nil {
+			return nil, err
+		}
+
+		comments[i].Profile = profile
+	}
+
 	return comments, nil
 }
 

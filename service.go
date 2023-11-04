@@ -30,6 +30,8 @@ func regiserService(app *fiber.App) {
 	follow := app.Group("/follow")
 	fan := app.Group("/fan")
 	video_views := video.Group("/views")
+	comment := app.Group("/comment")
+	barrage := app.Group("/barrage")
 
 	// Category
 	category.Get("/list", handler.GetCategoryListHandler)
@@ -44,6 +46,14 @@ func regiserService(app *fiber.App) {
 
 	// Video
 	video_views.Post("/add", handler.AddVideoViewsCountHandler)
+
+	// Comment
+	comment.Get("/list", handler.GetCommentListHandler)
+	comment.Get("/count", handler.GetCommentCountHandler)
+
+	// Barrage
+	barrage.Get("/list", handler.GetBarrageListHandler)
+	barrage.Get("/count", handler.GetBarrageCountHandler)
 
 	// 以下为权限控制接口
 	app.Use(jwtConfig)
@@ -83,4 +93,12 @@ func regiserService(app *fiber.App) {
 	// Fan
 	fan.Get("/list", handler.GetFansHandler)
 	fan.Get("/count", handler.GetFanCountHandler)
+
+	// Comment
+	comment.Post("/add", handler.AddCommentHandler)
+	comment.Delete("/delete", handler.DeleteCommentHandler)
+
+	// Barrage
+	barrage.Post("/add", handler.AddBarrageHandler)
+	barrage.Delete("/delete", handler.DeleteBarrageHandler)
 }

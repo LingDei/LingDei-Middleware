@@ -110,7 +110,7 @@ func GetCollectCount(video_uuid string) (int, error) {
 }
 
 // DeleteCollect 删除Collect
-func DeleteCollect(uuid string) error {
+func DeleteCollect(video_uuid, user_uuid string) error {
 	db, err := getDB()
 	if err != nil {
 		return err
@@ -122,7 +122,7 @@ func DeleteCollect(uuid string) error {
 
 	var collect model.Collect
 
-	if err := db.Where("uuid = ?", uuid).First(&collect).Error; err != nil {
+	if err := db.Where("video_uuid = ? AND user_uuid = ?", video_uuid, user_uuid).First(&collect).Error; err != nil {
 		return err
 	}
 

@@ -310,7 +310,7 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "删除收藏",
+                "description": "取消收藏",
                 "consumes": [
                     "application/json"
                 ],
@@ -320,12 +320,12 @@ const docTemplate = `{
                 "tags": [
                     "收藏管理"
                 ],
-                "summary": "删除收藏",
+                "summary": "取消收藏",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "收藏UUID",
-                        "name": "uuid",
+                        "description": "视频UUID",
+                        "name": "video_uuid",
                         "in": "query",
                         "required": true
                     }

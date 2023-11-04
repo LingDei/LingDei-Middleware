@@ -423,11 +423,11 @@ paths:
     delete:
       consumes:
       - application/json
-      description: 删除收藏
+      description: 取消收藏
       parameters:
-      - description: 收藏UUID
+      - description: 视频UUID
         in: query
-        name: uuid
+        name: video_uuid
         required: true
         type: string
       produces:
@@ -443,7 +443,7 @@ paths:
             $ref: '#/definitions/model.OperationResp'
       security:
       - ApiKeyAuth: []
-      summary: 删除收藏
+      summary: 取消收藏
       tags:
       - 收藏管理
   /collect/list:

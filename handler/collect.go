@@ -73,16 +73,16 @@ func GetCollectListHandler(c *fiber.Ctx) error {
 	})
 }
 
-// DeleteCollectHandler 删除收藏
+// DeleteCollectHandler 取消收藏
 //
-//	@Summary		删除收藏
-//	@Description	删除收藏
+//	@Summary		取消收藏
+//	@Description	取消收藏
 //	@Tags			收藏管理
 //	@Accept			json
 //	@Produce		json
-//	@Param			uuid	query		string	true	"收藏UUID"
-//	@Success		200		{object}	model.OperationResp
-//	@Failure		400		{object}	model.OperationResp
+//	@Param			video_uuid	query		string	true	"视频UUID"
+//	@Success		200			{object}	model.OperationResp
+//	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/collect/delete [delete]
 func DeleteCollectHandler(c *fiber.Ctx) error {
@@ -92,7 +92,7 @@ func DeleteCollectHandler(c *fiber.Ctx) error {
 	collect.User_UUID = method.GetUserFromToken(c).ID
 
 	// 删除Collect
-	if err := method.DeleteCollect(collect.UUID); err != nil {
+	if err := method.DeleteCollect(collect.Video_UUID, collect.User_UUID); err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,
 			Msg:  err.Error(),

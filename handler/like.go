@@ -3,6 +3,7 @@ package handler
 import (
 	"LingDei-Middleware/method"
 	"LingDei-Middleware/model"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -120,6 +121,8 @@ func DeleteLikeHandler(c *fiber.Ctx) error {
 	var like model.Like
 	c.QueryParser(&like)
 	like.User_UUID = method.GetUserFromToken(c).ID
+
+	fmt.Println(like)
 
 	// 删除Like
 	if err := method.DeleteLike(like.Video_UUID, like.User_UUID); err != nil {

@@ -280,8 +280,8 @@ func AddVideoViewsCountHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200		{object}	model.VideoListResp
-//	@Failure		400		{object}	model.OperationResp
+//	@Success		200	{object}	model.VideoListResp
+//	@Failure		400	{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/follow_list [get]
 func GetMyFollowVideoListHandler(c *fiber.Ctx) error {

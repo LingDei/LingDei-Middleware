@@ -3,6 +3,7 @@ package handler
 import (
 	"LingDei-Middleware/method"
 	"LingDei-Middleware/model"
+	"LingDei-Middleware/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -27,6 +28,7 @@ func AddCommentHandler(c *fiber.Ctx) error {
 	c.BodyParser(&comment)
 	comment.UUID = uuid.NewString()
 	comment.User_UUID = method.GetUserFromToken(c).ID
+	comment.Timestamp = utils.GetTimestamp()
 
 	// 创建 Comment
 	if err := method.AddComment(comment); err != nil {
@@ -110,8 +112,8 @@ func GetCommentCountHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			uuid	query		string	true	"评论UUID"
-//	@Success		200			{object}	model.OperationResp
-//	@Failure		400			{object}	model.OperationResp
+//	@Success		200		{object}	model.OperationResp
+//	@Failure		400		{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/comment/delete [delete]
 func DeleteCommentHandler(c *fiber.Ctx) error {

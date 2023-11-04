@@ -13,3 +13,8 @@ func GetTimeNow() string {
 func GetDateNow() string {
 	return time.Now().Format("2006-01-02")
 }
+
+// GetTimestamp 获取当前时间戳
+func GetTimestamp() int64 {
+	return time.Now().Unix()
+}

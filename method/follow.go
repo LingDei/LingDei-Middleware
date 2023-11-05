@@ -21,6 +21,11 @@ func AddFollow(follow model.Follow) error {
 		return err
 	}
 
+	// 禁止关注自己
+	if follow.Follow_UUID == follow.User_UUID {
+		return errors.New("不能关注自己")
+	}
+
 	// 检查follow_uuid和user_uuid是否存在
 	if flag, _ := CheckFollowExist(follow.Follow_UUID, follow.User_UUID); flag {
 		return errors.New("已经关注过该用户了")

@@ -80,6 +80,40 @@ func GetBarrageListHandler(c *fiber.Ctx) error {
 	})
 }
 
+// GetRecentBarrageListHandler 获取最近的Barrage列表
+//
+//	@Summary		获取最近的Barrage列表
+//	@Description	获取最近的Barrage列表
+//	@Tags			弹幕管理
+//	@Accept			json
+//	@Produce		json
+//	@Param			video_uuid	query		string	true	"视频UUID"
+//	@Param			second		query		int64	true	"弹幕秒数"
+//	@Param			limit		query		int64	false	"几秒内的"
+//	@Success		200			{object}	model.BarrageListResp
+//	@Failure		400			{object}	model.OperationResp
+//	@Router			/barrage/recent_list [get]
+func GetRecentBarrageListHandler(c *fiber.Ctx) error {
+	// 获取参数
+	video_uuid := c.Query("video_uuid")
+	second := c.QueryInt("second")
+	limit := c.QueryInt("limit", 60)
+
+	// 获取 Barrage 列表
+	barrages, err := method.GetRecentBarrageList(video_uuid, int64(second), int64(limit))
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
+	return c.JSON(model.BarrageListResp{
+		Code:        200,
+		BarrageList: barrages,
+	})
+}
+
 // GetBarrageCountHandler 获取Barrage数量
 //
 //	@Summary		获取Barrage数量

@@ -235,6 +235,57 @@
                 }
             }
         },
+        "/barrage/recent_list": {
+            "get": {
+                "description": "获取最近的Barrage列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "弹幕管理"
+                ],
+                "summary": "获取最近的Barrage列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "视频UUID",
+                        "name": "video_uuid",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "弹幕秒数",
+                        "name": "second",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "几秒内的",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.BarrageListResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
         "/category/add": {
             "post": {
                 "security": [

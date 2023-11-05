@@ -472,6 +472,40 @@ paths:
       summary: 获取Barrage列表
       tags:
       - 弹幕管理
+  /barrage/recent_list:
+    get:
+      consumes:
+      - application/json
+      description: 获取最近的Barrage列表
+      parameters:
+      - description: 视频UUID
+        in: query
+        name: video_uuid
+        required: true
+        type: string
+      - description: 弹幕秒数
+        in: query
+        name: second
+        required: true
+        type: integer
+      - description: 几秒内的
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BarrageListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      summary: 获取最近的Barrage列表
+      tags:
+      - 弹幕管理
   /category/add:
     post:
       consumes:

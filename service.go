@@ -56,6 +56,7 @@ func regiserService(app *fiber.App) {
 	// Barrage
 	barrage.Get("/get", handler.GetBarrageHandler)
 	barrage.Get("/list", handler.GetBarrageListHandler)
+	barrage.Get("/recent_list", handler.GetRecentBarrageListHandler)
 	barrage.Get("/count", handler.GetBarrageCountHandler)
 
 	// 以下为权限控制接口

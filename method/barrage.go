@@ -47,6 +47,26 @@ func GetBarrageList(video_uuid string, page, page_size int) ([]model.Barrage, er
 	return barrages, nil
 }
 
+// GetRecentBarrageList 获取最近的Barrage列表
+func GetRecentBarrageList(video_uuid string, second, limit int64) ([]model.Barrage, error) {
+	db, err := getDB()
+	if err != nil {
+		return nil, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var barrages []model.Barrage
+
+	if err := db.Where("video_uuid = ? AND second >= ? AND second <= ?", video_uuid, second, second+limit).Find(&barrages).Error; err != nil {
+		return nil, err
+	}
+
+	return barrages, nil
+}
+
 // GetBarrageCount 获取Barrage数量
 func GetBarrageCount(video_uuid string) (int, error) {
 	db, err := getDB()

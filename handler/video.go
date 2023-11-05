@@ -31,7 +31,7 @@ func AddVideoHandler(c *fiber.Ctx) error {
 
 	video.URL = "https://bucket.lingdei.doyi.online/videos/" + video.UUID + ".mp4"
 	video.Thumbnail_URL = "https://bucket.lingdei.doyi.online/frames/" + video.UUID + ".jpg"
-	video.PublishDate = utils.GetDateNow()
+	video.Timestamp = utils.GetTimestamp()
 	video.Views = 0
 
 	// 创建 Video

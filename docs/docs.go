@@ -2286,8 +2286,8 @@ const docTemplate = `{
                 "author_uuid",
                 "category_uuid",
                 "name",
-                "publish_date",
                 "thumbnail_url",
+                "timestamp",
                 "url",
                 "uuid"
             ],
@@ -2301,11 +2301,11 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "publish_date": {
-                    "type": "string"
-                },
                 "thumbnail_url": {
                     "type": "string"
+                },
+                "timestamp": {
+                    "type": "integer"
                 },
                 "url": {
                     "type": "string"

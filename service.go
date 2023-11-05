@@ -40,11 +40,12 @@ func regiserService(app *fiber.App) {
 	// Video
 	video.Get("/list", handler.GetVideoListHandler)
 	video.Get("/get", handler.GetVideoHandler)
+	video.Get("/search", handler.SearchVideoHandler)
 
 	// Like
 	like.Get("/count", handler.GetLikeCountHandler)
 
-	// Video
+	// Video Views
 	video_views.Post("/add", handler.AddVideoViewsCountHandler)
 
 	// Comment

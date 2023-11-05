@@ -299,3 +299,36 @@ func GetMyFollowVideoListHandler(c *fiber.Ctx) error {
 		Video_List: videos,
 	})
 }
+
+// SearchVideoHandler   搜索视频
+//
+//	@Summary		搜索视频
+//	@Description	搜索视频
+//	@Tags			视频管理
+//	@Accept			json
+//	@Produce		json
+//	@Param			keyword		query		string	fasle	"关键词"
+//	@Param			page		query		int		false	"页数"
+//	@Param			page_size	query		int		false	"每页数量"
+//	@Success		200			{object}	model.VideoListResp
+//	@Failure		400			{object}	model.OperationResp
+//	@Router			/video/search [get]
+func SearchVideoHandler(c *fiber.Ctx) error {
+	// 获取参数
+	keyword := c.Query("keyword")
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
+	// 搜索视频
+	videos, err := method.SearchVideo(keyword, page, page_size)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+	return c.JSON(model.VideoListResp{
+		Code:       200,
+		Video_List: videos,
+	})
+}

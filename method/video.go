@@ -229,3 +229,24 @@ func GetFollowVideos(user_uuid string) ([]model.Video, error) {
 
 	return videoList, nil
 }
+
+// SearchVideo 搜索视频
+func SearchVideo(keyword string, page, page_size int) ([]model.Video, error) {
+	db, err := getDB()
+	if err != nil {
+		return nil, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var videos []model.Video
+
+	// 分页查询
+	if err := db.Where("name LIKE ?", "%"+keyword+"%").Offset((page - 1) * page_size).Limit(page_size).Find(&videos).Error; err != nil {
+		return nil, err
+	}
+
+	return videos, nil
+}

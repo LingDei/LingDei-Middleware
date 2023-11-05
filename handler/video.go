@@ -112,6 +112,37 @@ func GetVideoListHandler(c *fiber.Ctx) error {
 	})
 }
 
+// GetRecommendVideoList 获取推荐的视频列表
+//
+//	@Summary		获取推荐的视频列表
+//	@Description	获取推荐的视频列表
+//	@Tags			视频管理
+//	@Accept			json
+//	@Produce		json
+//	@Param			page		query		int	false	"页数"
+//	@Param			page_size	query		int	false	"每页数量"
+//	@Success		200			{object}	model.VideoListResp
+//	@Failure		400			{object}	model.OperationResp
+//	@Router			/video/recommend_list [get]
+func GetRecommendVideoListHandler(c *fiber.Ctx) error {
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
+	// 获取视频列表
+	videos, err := method.GetRecommendVideoList(page, page_size)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
+	return c.JSON(model.VideoListResp{
+		Code:       200,
+		Video_List: videos,
+	})
+}
+
 // GetMyVideoListHandler 获取我的视频列表
 //
 //	@Summary		获取我的视频列表

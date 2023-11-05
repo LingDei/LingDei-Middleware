@@ -64,6 +64,26 @@ func GetVideoList(category_uuid, user_uuid string, page, page_size int) ([]model
 	return videos, nil
 }
 
+// GetRecommendVideoList 获取推荐的Video列表，对views进行排序
+func GetRecommendVideoList(page, page_size int) ([]model.Video, error) {
+	db, err := getDB()
+	if err != nil {
+		return nil, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var videos []model.Video
+
+	if err := db.Order("views desc").Offset((page - 1) * page_size).Limit(page_size).Find(&videos).Error; err != nil {
+		return nil, err
+	}
+
+	return videos, nil
+}
+
 // GetVideo 获取Video
 func GetVideo(uuid string) (model.Video, error) {
 	db, err := getDB()

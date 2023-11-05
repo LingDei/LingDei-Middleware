@@ -1395,6 +1395,34 @@ paths:
       summary: 获取我的视频列表
       tags:
       - 视频管理
+  /video/recommend_list:
+    get:
+      consumes:
+      - application/json
+      description: 获取推荐的视频列表
+      parameters:
+      - description: 页数
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.VideoListResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.OperationResp'
+      summary: 获取推荐的视频列表
+      tags:
+      - 视频管理
   /video/search:
     get:
       consumes:

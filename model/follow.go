@@ -5,7 +5,7 @@ type Follow struct {
 	UUID        string `json:"uuid" validate:"required" gorm:"primaryKey"`
 	Follow_UUID string `json:"follow_uuid" validate:"required" gorm:"type:varchar(191)"`
 	User_UUID   string `json:"user_uuid" validate:"required" gorm:"type:varchar(191)"`
-	User        User   `json:"user" gorm:"-"`
+	User        User   `json:"user" validate:"-" gorm:"-"`
 }
 
 // FollowResp

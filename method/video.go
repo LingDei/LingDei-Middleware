@@ -211,7 +211,7 @@ func GetFollowVideos(user_uuid string, page, page_size int) ([]model.Video, erro
 	defer sqlDB.Close()
 
 	var followList []model.Follow
-	var videoList []model.Video
+	var videoList []model.Video = make([]model.Video, 0)
 
 	if err := db.Where("user_uuid = ?", user_uuid).Find(&followList).Error; err != nil {
 		return nil, err

@@ -218,13 +218,18 @@ func GetFollowVideos(user_uuid string, page, page_size int) ([]model.Video, erro
 	}
 
 	for _, follow := range followList {
-		var video model.Video
+		var videos []model.Video
 
-		if err := db.Where("author_uuid = ?", follow.Follow_UUID).Offset((page - 1) * page_size).Limit(page_size).Find(&video).Error; err != nil {
+		if err := db.Where("author_uuid = ?", follow.Follow_UUID).Find(&videos).Error; err != nil {
 			return nil, err
 		}
 
-		videoList = append(videoList, video)
+		videoList = append(videoList, videos...)
+	}
+
+	// 对视频列表进行分页
+	if len(videoList) > page_size {
+		videoList = videoList[(page-1)*page_size : page*page_size]
 	}
 
 	return videoList, nil

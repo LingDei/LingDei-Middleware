@@ -151,7 +151,7 @@ func UpdateLike(like model.Like) error {
 }
 
 // GetLikeListByUserUUID 获取用户相关的Like列表
-func GetLikeListByUserUUID(user_uuid string) ([]model.Like, error) {
+func GetLikeListByUserUUID(user_uuid string, page, page_size int) ([]model.Like, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -163,7 +163,7 @@ func GetLikeListByUserUUID(user_uuid string) ([]model.Like, error) {
 
 	var likes []model.Like
 
-	if err := db.Where("user_uuid = ?", user_uuid).Find(&likes).Error; err != nil {
+	if err := db.Where("user_uuid = ?", user_uuid).Offset((page - 1) * page_size).Limit(page_size).Find(&likes).Error; err != nil {
 		return nil, err
 	}
 

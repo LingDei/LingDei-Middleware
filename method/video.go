@@ -35,7 +35,7 @@ func AddVideo(video model.Video) error {
 }
 
 // GetVideoList 获取Video列表
-func GetVideoList(category_uuid, user_uuid string) ([]model.Video, error) {
+func GetVideoList(category_uuid, user_uuid string, page, page_size int) ([]model.Video, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -48,15 +48,15 @@ func GetVideoList(category_uuid, user_uuid string) ([]model.Video, error) {
 	var videos []model.Video
 
 	if category_uuid != "" {
-		if err := db.Where("category_uuid = ?", category_uuid).Find(&videos).Error; err != nil {
+		if err := db.Where("category_uuid = ?", category_uuid).Offset((page - 1) * page_size).Limit(page_size).Find(&videos).Error; err != nil {
 			return nil, err
 		}
 	} else if user_uuid != "" {
-		if err := db.Where("author_uuid = ?", user_uuid).Find(&videos).Error; err != nil {
+		if err := db.Where("author_uuid = ?", user_uuid).Offset((page - 1) * page_size).Limit(page_size).Find(&videos).Error; err != nil {
 			return nil, err
 		}
 	} else {
-		if err := db.Find(&videos).Error; err != nil {
+		if err := db.Offset((page - 1) * page_size).Limit(page_size).Find(&videos).Error; err != nil {
 			return nil, err
 		}
 	}
@@ -200,7 +200,7 @@ func AddVideoViewsCount(uuid string) error {
 }
 
 // GetFollowVideos 获取我关注的用户的视频
-func GetFollowVideos(user_uuid string) ([]model.Video, error) {
+func GetFollowVideos(user_uuid string, page, page_size int) ([]model.Video, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -220,7 +220,7 @@ func GetFollowVideos(user_uuid string) ([]model.Video, error) {
 	for _, follow := range followList {
 		var video model.Video
 
-		if err := db.Where("author_uuid = ?", follow.Follow_UUID).Find(&video).Error; err != nil {
+		if err := db.Where("author_uuid = ?", follow.Follow_UUID).Offset((page - 1) * page_size).Limit(page_size).Find(&video).Error; err != nil {
 			return nil, err
 		}
 

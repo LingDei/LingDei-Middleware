@@ -211,6 +211,18 @@ const docTemplate = `{
                         "name": "video_uuid",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -578,6 +590,20 @@ const docTemplate = `{
                     "收藏管理"
                 ],
                 "summary": "获取某位用户自己的收藏列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -783,6 +809,18 @@ const docTemplate = `{
                         "name": "video_uuid",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -856,6 +894,20 @@ const docTemplate = `{
                     "粉丝管理"
                 ],
                 "summary": "获取我的粉丝列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1053,6 +1105,20 @@ const docTemplate = `{
                     "关注管理"
                 ],
                 "summary": "获取我的关注列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1254,6 +1320,20 @@ const docTemplate = `{
                     "点赞管理"
                 ],
                 "summary": "获取某位用户自己的点赞列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1388,6 +1468,20 @@ const docTemplate = `{
                     "视频管理"
                 ],
                 "summary": "获取我关注的用户的视频",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1467,6 +1561,18 @@ const docTemplate = `{
                         "description": "视频分类 UUID",
                         "name": "category_uuid",
                         "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1503,6 +1609,69 @@ const docTemplate = `{
                     "视频管理"
                 ],
                 "summary": "获取我的视频列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.VideoListResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.OperationResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/video/search": {
+            "get": {
+                "description": "搜索视频",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频管理"
+                ],
+                "summary": "搜索视频",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "关键词",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页数",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数量",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1814,6 +1983,9 @@ const docTemplate = `{
             "properties": {
                 "content": {
                     "type": "string"
+                },
+                "profile": {
+                    "$ref": "#/definitions/model.Profile"
                 },
                 "timestamp": {
                     "type": "integer"

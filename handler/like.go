@@ -49,8 +49,10 @@ func AddLikeHandler(c *fiber.Ctx) error {
 //	@Tags			点赞管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	model.LikeListResp
-//	@Failure		400	{object}	model.LikeListResp
+//	@Param			page		query		int	false	"页数"
+//	@Param			page_size	query		int	false	"每页数量"
+//	@Success		200			{object}	model.LikeListResp
+//	@Failure		400			{object}	model.LikeListResp
 //	@Security		ApiKeyAuth
 //	@Router			/like/list [get]
 func GetLikeListHandler(c *fiber.Ctx) error {
@@ -58,8 +60,11 @@ func GetLikeListHandler(c *fiber.Ctx) error {
 	var like model.Like
 	like.User_UUID = method.GetUserFromToken(c).ID
 
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
 	// 获取Like列表
-	likes, err := method.GetLikeListByUserUUID(like.User_UUID)
+	likes, err := method.GetLikeListByUserUUID(like.User_UUID, page, page_size)
 	if err != nil {
 		return c.JSON(model.LikeListResp{
 			Code:     400,

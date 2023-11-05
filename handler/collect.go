@@ -48,8 +48,10 @@ func AddCollectHandler(c *fiber.Ctx) error {
 //	@Tags			收藏管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	model.CollectListResp
-//	@Failure		400	{object}	model.OperationResp
+//	@Param			page		query		int	false	"页数"
+//	@Param			page_size	query		int	false	"每页数量"
+//	@Success		200			{object}	model.CollectListResp
+//	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/collect/list [get]
 func GetCollectListHandler(c *fiber.Ctx) error {
@@ -58,8 +60,11 @@ func GetCollectListHandler(c *fiber.Ctx) error {
 	c.QueryParser(&collect)
 	collect.User_UUID = method.GetUserFromToken(c).ID
 
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
 	// 获取收藏列表
-	collectList, err := method.GetCollectListByUserUUID(collect.User_UUID)
+	collectList, err := method.GetCollectListByUserUUID(collect.User_UUID, page, page_size)
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,

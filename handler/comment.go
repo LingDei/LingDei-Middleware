@@ -52,6 +52,8 @@ func AddCommentHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			video_uuid	query		string	true	"视频UUID"
+//	@Param			page		query		int		false	"页数"
+//	@Param			page_size	query		int		false	"每页数量"
 //	@Success		200			{object}	model.CommentListResp
 //	@Failure		400			{object}	model.CommentListResp
 //	@Router			/comment/list [get]
@@ -59,8 +61,11 @@ func GetCommentListHandler(c *fiber.Ctx) error {
 	// 获取参数
 	video_uuid := c.Query("video_uuid")
 
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
 	// 获取 Comment 列表
-	comments, err := method.GetCommentList(video_uuid)
+	comments, err := method.GetCommentList(video_uuid, page, page_size)
 	if err != nil {
 		return c.JSON(model.CommentListResp{
 			Code:        400,

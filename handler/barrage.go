@@ -53,6 +53,8 @@ func AddBarrageHandler(c *fiber.Ctx) error {
 //	@Accept			json
 //	@Produce		json
 //	@Param			video_uuid	query		string	true	"视频UUID"
+//	@Param			page		query		int		false	"页数"
+//	@Param			page_size	query		int		false	"每页数量"
 //	@Success		200			{object}	model.BarrageListResp
 //	@Failure		400			{object}	model.OperationResp
 //	@Router			/barrage/list [get]
@@ -60,8 +62,11 @@ func GetBarrageListHandler(c *fiber.Ctx) error {
 	// 获取参数
 	video_uuid := c.Query("video_uuid")
 
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
 	// 获取 Barrage 列表
-	barrages, err := method.GetBarrageList(video_uuid)
+	barrages, err := method.GetBarrageList(video_uuid, page, page_size)
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,

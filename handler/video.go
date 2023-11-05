@@ -85,6 +85,8 @@ func GetUploadTokenHandler(c *fiber.Ctx) error {
 //	@Produce		json
 //	@Param			user_uuid		query		string	false	"用户 UUID"
 //	@Param			category_uuid	query		string	false	"视频分类 UUID"
+//	@Param			page			query		int		false	"页数"
+//	@Param			page_size		query		int		false	"每页数量"
 //	@Success		200				{object}	model.VideoListResp
 //	@Failure		400				{object}	model.OperationResp
 //	@Router			/video/list [get]
@@ -92,8 +94,11 @@ func GetVideoListHandler(c *fiber.Ctx) error {
 	user_uuid := c.Query("user_uuid")
 	category_uuid := c.Query("category_uuid")
 
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
 	// 获取视频列表
-	videos, err := method.GetVideoList(category_uuid, user_uuid)
+	videos, err := method.GetVideoList(category_uuid, user_uuid, page, page_size)
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,
@@ -114,13 +119,18 @@ func GetVideoListHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	model.VideoListResp
-//	@Failure		400	{object}	model.OperationResp
+//	@Param			page		query		int	false	"页数"
+//	@Param			page_size	query		int	false	"每页数量"
+//	@Success		200			{object}	model.VideoListResp
+//	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/my_list [get]
 func GetMyVideoListHandler(c *fiber.Ctx) error {
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
 	// 获取视频列表
-	videos, err := method.GetVideoList("", method.GetUserFromToken(c).ID)
+	videos, err := method.GetVideoList("", method.GetUserFromToken(c).ID, page, page_size)
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,
@@ -280,13 +290,18 @@ func AddVideoViewsCountHandler(c *fiber.Ctx) error {
 //	@Tags			视频管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	model.VideoListResp
-//	@Failure		400	{object}	model.OperationResp
+//	@Param			page		query		int	false	"页数"
+//	@Param			page_size	query		int	false	"每页数量"
+//	@Success		200			{object}	model.VideoListResp
+//	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/video/follow_list [get]
 func GetMyFollowVideoListHandler(c *fiber.Ctx) error {
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
 	// 获取视频列表
-	videos, err := method.GetFollowVideos(method.GetUserFromToken(c).ID)
+	videos, err := method.GetFollowVideos(method.GetUserFromToken(c).ID, page, page_size)
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,

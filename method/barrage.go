@@ -28,7 +28,7 @@ func AddBarrage(barrage model.Barrage) error {
 }
 
 // GetBarrageList 获取Barrage列表
-func GetBarrageList(video_uuid string) ([]model.Barrage, error) {
+func GetBarrageList(video_uuid string, page, page_size int) ([]model.Barrage, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -40,7 +40,7 @@ func GetBarrageList(video_uuid string) ([]model.Barrage, error) {
 
 	var barrages []model.Barrage
 
-	if err := db.Where("video_uuid = ?", video_uuid).Find(&barrages).Error; err != nil {
+	if err := db.Where("video_uuid = ?", video_uuid).Offset((page - 1) * page_size).Limit(page_size).Find(&barrages).Error; err != nil {
 		return nil, err
 	}
 

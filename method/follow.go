@@ -34,7 +34,7 @@ func AddFollow(follow model.Follow) error {
 }
 
 // GetFollowListByUserUUID 获取我的关注列表
-func GetFollowListByUserUUID(user_uuid string) ([]model.Follow, error) {
+func GetFollowListByUserUUID(user_uuid string, page, page_size int) ([]model.Follow, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func GetFollowListByUserUUID(user_uuid string) ([]model.Follow, error) {
 }
 
 // GetFanListByFollowUUID 获取我的粉丝列表
-func GetFanListByFollowUUID(user_uuid string) ([]model.Follow, error) {
+func GetFanListByFollowUUID(user_uuid string, page, page_size int) ([]model.Follow, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -75,7 +75,7 @@ func GetFanListByFollowUUID(user_uuid string) ([]model.Follow, error) {
 
 	var follows []model.Follow
 
-	if err := db.Where("follow_uuid = ?", user_uuid).Find(&follows).Error; err != nil {
+	if err := db.Where("follow_uuid = ?", user_uuid).Offset((page - 1) * page_size).Limit(page_size).Find(&follows).Error; err != nil {
 		return nil, err
 	}
 

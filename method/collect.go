@@ -152,7 +152,7 @@ func UpdateCollect(collect model.Collect) error {
 }
 
 // GetCollectListByUserUUID 获取用户相关的Collect列表
-func GetCollectListByUserUUID(user_uuid string) ([]model.Collect, error) {
+func GetCollectListByUserUUID(user_uuid string, page, page_size int) ([]model.Collect, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -164,7 +164,7 @@ func GetCollectListByUserUUID(user_uuid string) ([]model.Collect, error) {
 
 	var collects []model.Collect
 
-	if err := db.Where("user_uuid = ?", user_uuid).Find(&collects).Error; err != nil {
+	if err := db.Where("user_uuid = ?", user_uuid).Offset((page - 1) * page_size).Limit(page_size).Find(&collects).Error; err != nil {
 		return nil, err
 	}
 

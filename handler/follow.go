@@ -80,16 +80,21 @@ func DeleteFollowHandler(c *fiber.Ctx) error {
 //	@Tags			关注管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	model.FollowListResp
-//	@Failure		400	{object}	model.OperationResp
+//	@Param			page		query		int	false	"页数"
+//	@Param			page_size	query		int	false	"每页数量"
+//	@Success		200			{object}	model.FollowListResp
+//	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/follow/list [get]
 func GetFollowListHandler(c *fiber.Ctx) error {
 	// 获取参数
 	user_uuid := method.GetUserFromToken(c).ID
 
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
 	// 获取关注列表
-	followList, err := method.GetFollowListByUserUUID(user_uuid)
+	followList, err := method.GetFollowListByUserUUID(user_uuid, page, page_size)
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,
@@ -173,16 +178,21 @@ func CheckFollowStatusHandler(c *fiber.Ctx) error {
 //	@Tags			粉丝管理
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	model.FollowListResp
-//	@Failure		400	{object}	model.OperationResp
+//	@Param			page		query		int	false	"页数"
+//	@Param			page_size	query		int	false	"每页数量"
+//	@Success		200			{object}	model.FollowListResp
+//	@Failure		400			{object}	model.OperationResp
 //	@Security		ApiKeyAuth
 //	@Router			/fan/list [get]
 func GetFansHandler(c *fiber.Ctx) error {
 	// 获取参数
 	user_uuid := method.GetUserFromToken(c).ID
 
+	page := c.QueryInt("page", 1)
+	page_size := c.QueryInt("page_size", 9)
+
 	// 获取粉丝列表
-	fansList, err := method.GetFanListByFollowUUID(user_uuid)
+	fansList, err := method.GetFanListByFollowUUID(user_uuid, page, page_size)
 	if err != nil {
 		return c.JSON(model.OperationResp{
 			Code: 400,

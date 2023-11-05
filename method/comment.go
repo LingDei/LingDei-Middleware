@@ -28,7 +28,7 @@ func AddComment(comment model.Comment) error {
 }
 
 // GetCommentList 获取Comment列表
-func GetCommentList(video_uuid string) ([]model.Comment, error) {
+func GetCommentList(video_uuid string, page, page_size int) ([]model.Comment, error) {
 	db, err := getDB()
 	if err != nil {
 		return nil, err
@@ -40,7 +40,7 @@ func GetCommentList(video_uuid string) ([]model.Comment, error) {
 
 	var comments []model.Comment
 
-	if err := db.Where("video_uuid = ?", video_uuid).Find(&comments).Error; err != nil {
+	if err := db.Where("video_uuid = ?", video_uuid).Offset((page - 1) * page_size).Limit(page_size).Find(&comments).Error; err != nil {
 		return nil, err
 	}
 

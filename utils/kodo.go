@@ -24,7 +24,7 @@ func getBucketManager() (*storage.BucketManager, error) {
 	cfg.Region = config.QINIU_REGION
 
 	// 是否使用https域名
-	cfg.UseHTTPS = true
+	cfg.UseHTTPS = false
 
 	return storage.NewBucketManager(mac, &cfg), nil
 }

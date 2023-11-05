@@ -22,7 +22,7 @@ func AddFollow(follow model.Follow) error {
 	}
 
 	// 检查follow_uuid和user_uuid是否存在
-	if flag, _ := CheckLikeExist(follow.Follow_UUID, follow.User_UUID); flag {
+	if flag, _ := CheckFollowExist(follow.Follow_UUID, follow.User_UUID); flag {
 		return errors.New("已经关注过该用户了")
 	}
 

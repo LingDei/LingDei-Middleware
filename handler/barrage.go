@@ -74,9 +74,19 @@ func GetBarrageListHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取 Barrage 数量
+	total, err := method.GetBarrageCount(video_uuid)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
 	return c.JSON(model.BarrageListResp{
 		Code:        200,
 		BarrageList: barrages,
+		Total:       total,
 	})
 }
 

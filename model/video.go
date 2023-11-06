@@ -20,6 +20,7 @@ type VideoResp struct {
 type VideoListResp struct {
 	Code       int     `json:"code"`
 	Video_List []Video `json:"video_list"`
+	Total      int64   `json:"total,omitempty"`
 }
 
 type UploadTokenResp struct {

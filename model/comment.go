@@ -14,6 +14,7 @@ type Comment struct {
 type CommentListResp struct {
 	Code        int       `json:"code"`
 	CommentList []Comment `json:"comment_list"`
+	Total       int64     `json:"total,omitempty"`
 }
 
 // CommentResp 评论响应
@@ -24,6 +25,6 @@ type CommentResp struct {
 
 // CommentCountResp 评论数量响应
 type CommentCountResp struct {
-	Code  int `json:"code"`
-	Count int `json:"count"`
+	Code  int   `json:"code"`
+	Count int64 `json:"count"`
 }

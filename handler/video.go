@@ -106,9 +106,19 @@ func GetVideoListHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取视频总数
+	total, err := method.GetVideoListCount(category_uuid, user_uuid)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
 	return c.JSON(model.VideoListResp{
 		Code:       200,
 		Video_List: videos,
+		Total:      total,
 	})
 }
 
@@ -137,9 +147,19 @@ func GetRecommendVideoListHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取视频总数
+	total, err := method.GetRecommendVideoListCount()
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
 	return c.JSON(model.VideoListResp{
 		Code:       200,
 		Video_List: videos,
+		Total:      total,
 	})
 }
 
@@ -169,9 +189,19 @@ func GetMyVideoListHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取视频总数
+	total, err := method.GetVideoListCount("", method.GetUserFromToken(c).ID)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
 	return c.JSON(model.VideoListResp{
 		Code:       200,
 		Video_List: videos,
+		Total:      total,
 	})
 }
 
@@ -340,9 +370,19 @@ func GetMyFollowVideoListHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取视频总数
+	total, err := method.GetFollowVideosCount(method.GetUserFromToken(c).ID)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
 	return c.JSON(model.VideoListResp{
 		Code:       200,
 		Video_List: videos,
+		Total:      total,
 	})
 }
 
@@ -373,8 +413,19 @@ func SearchVideoHandler(c *fiber.Ctx) error {
 			Msg:  err.Error(),
 		})
 	}
+
+	// 获取视频总数
+	total, err := method.SearchVideoCount(keyword)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
 	return c.JSON(model.VideoListResp{
 		Code:       200,
 		Video_List: videos,
+		Total:      total,
 	})
 }

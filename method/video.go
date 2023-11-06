@@ -64,6 +64,36 @@ func GetVideoList(category_uuid, user_uuid string, page, page_size int) ([]model
 	return videos, nil
 }
 
+// GetVideoListCount 获取Video列表数量
+func GetVideoListCount(category_uuid, user_uuid string) (int64, error) {
+	db, err := getDB()
+	if err != nil {
+		return 0, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var count int64
+
+	if category_uuid != "" {
+		if err := db.Model(&model.Video{}).Where("category_uuid = ?", category_uuid).Count(&count).Error; err != nil {
+			return 0, err
+		}
+	} else if user_uuid != "" {
+		if err := db.Model(&model.Video{}).Where("author_uuid = ?", user_uuid).Count(&count).Error; err != nil {
+			return 0, err
+		}
+	} else {
+		if err := db.Model(&model.Video{}).Count(&count).Error; err != nil {
+			return 0, err
+		}
+	}
+
+	return count, nil
+}
+
 // GetRecommendVideoList 获取推荐的Video列表，对views进行排序
 func GetRecommendVideoList(page, page_size int) ([]model.Video, error) {
 	db, err := getDB()
@@ -82,6 +112,26 @@ func GetRecommendVideoList(page, page_size int) ([]model.Video, error) {
 	}
 
 	return videos, nil
+}
+
+// GetRecommendVideoListCount 获取推荐的Video列表数量
+func GetRecommendVideoListCount() (int64, error) {
+	db, err := getDB()
+	if err != nil {
+		return 0, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var count int64
+
+	if err := db.Model(&model.Video{}).Count(&count).Error; err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 // GetVideo 获取Video
@@ -255,6 +305,37 @@ func GetFollowVideos(user_uuid string, page, page_size int) ([]model.Video, erro
 	return videoList, nil
 }
 
+// GetFollowVideosCount 获取我关注的用户的视频数量
+func GetFollowVideosCount(user_uuid string) (int64, error) {
+	db, err := getDB()
+	if err != nil {
+		return 0, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var followList []model.Follow
+	var count int64
+
+	if err := db.Where("user_uuid = ?", user_uuid).Find(&followList).Error; err != nil {
+		return 0, err
+	}
+
+	for _, follow := range followList {
+		var videos []model.Video
+
+		if err := db.Where("author_uuid = ?", follow.Follow_UUID).Find(&videos).Error; err != nil {
+			return 0, err
+		}
+
+		count += int64(len(videos))
+	}
+
+	return count, nil
+}
+
 // SearchVideo 搜索视频
 func SearchVideo(keyword string, page, page_size int) ([]model.Video, error) {
 	db, err := getDB()
@@ -274,4 +355,24 @@ func SearchVideo(keyword string, page, page_size int) ([]model.Video, error) {
 	}
 
 	return videos, nil
+}
+
+// SearchVideoCount 搜索视频数量
+func SearchVideoCount(keyword string) (int64, error) {
+	db, err := getDB()
+	if err != nil {
+		return 0, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var count int64
+
+	if err := db.Model(&model.Video{}).Where("name LIKE ?", "%"+keyword+"%").Count(&count).Error; err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }

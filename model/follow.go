@@ -15,8 +15,8 @@ type FollowResp struct {
 }
 
 type FollowCountResp struct {
-	Code  int `json:"code"`
-	Count int `json:"count"`
+	Code  int   `json:"code"`
+	Count int64 `json:"count"`
 }
 
 type FollowStatusResp struct {
@@ -27,9 +27,11 @@ type FollowStatusResp struct {
 type FollowListResp struct {
 	Code       int      `json:"code"`
 	FollowList []Follow `json:"follow_list"`
+	Total      int64    `json:"total,omitempty"`
 }
 
 type FanListResp struct {
 	Code    int      `json:"code"`
 	FanList []Follow `json:"fan_list"`
+	Total   int64    `json:"total,omitempty"`
 }

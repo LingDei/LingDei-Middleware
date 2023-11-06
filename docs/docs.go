@@ -1964,6 +1964,9 @@ const docTemplate = `{
                 },
                 "code": {
                     "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -2051,6 +2054,9 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.Collect"
                     }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -2117,6 +2123,9 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.Comment"
                     }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -2175,6 +2184,9 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.Follow"
                     }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -2233,6 +2245,9 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.Like"
                     }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -2365,6 +2380,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "code": {
+                    "type": "integer"
+                },
+                "total": {
                     "type": "integer"
                 },
                 "video_list": {

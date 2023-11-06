@@ -72,9 +72,19 @@ func GetLikeListHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取Like数量
+	count, err := method.GetLikeCountByUserUUID(like.User_UUID)
+	if err != nil {
+		return c.JSON(model.LikeListResp{
+			Code:     400,
+			LikeList: nil,
+		})
+	}
+
 	return c.JSON(model.LikeListResp{
 		Code:     200,
 		LikeList: likes,
+		Total:    count,
 	})
 }
 

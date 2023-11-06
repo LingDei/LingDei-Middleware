@@ -72,9 +72,19 @@ func GetCollectListHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取收藏列表的数量
+	total, err := method.GetCollectCountByUserUUID(collect.User_UUID)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
 	return c.JSON(model.CollectListResp{
 		Code:        200,
 		CollectList: collectList,
+		Total:       total,
 	})
 }
 

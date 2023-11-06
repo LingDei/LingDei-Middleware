@@ -24,4 +24,5 @@ type CollectStatusResp struct {
 type CollectListResp struct {
 	Code        int       `json:"code"`
 	CollectList []Collect `json:"collect_list"`
+	Total       int64     `json:"total,omitempty"`
 }

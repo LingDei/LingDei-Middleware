@@ -68,7 +68,7 @@ func GetRecentBarrageList(video_uuid string, second, limit int64) ([]model.Barra
 }
 
 // GetBarrageCount 获取Barrage数量
-func GetBarrageCount(video_uuid string) (int, error) {
+func GetBarrageCount(video_uuid string) (int64, error) {
 	db, err := getDB()
 	if err != nil {
 		return 0, err
@@ -84,7 +84,7 @@ func GetBarrageCount(video_uuid string) (int, error) {
 		return 0, err
 	}
 
-	return int(count), nil
+	return count, nil
 }
 
 // DeleteBarrage 删除Barrage

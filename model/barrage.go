@@ -14,6 +14,7 @@ type Barrage struct {
 type BarrageListResp struct {
 	Code        int       `json:"code"`
 	BarrageList []Barrage `json:"barrage_list"`
+	Total       int64     `json:"total,omitempty"`
 }
 
 // BarrageResp 弹幕响应
@@ -24,6 +25,6 @@ type BarrageResp struct {
 
 // BarrageCountResp 弹幕数量响应
 type BarrageCountResp struct {
-	Code  int `json:"code"`
-	Count int `json:"count"`
+	Code  int   `json:"code"`
+	Count int64 `json:"count"`
 }

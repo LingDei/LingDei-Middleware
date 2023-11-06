@@ -179,6 +179,26 @@ func GetLikeListByUserUUID(user_uuid string, page, page_size int) ([]model.Like,
 	return likes, nil
 }
 
+// GetLikeCountByUserUUID 获取用户相关的Like数量
+func GetLikeCountByUserUUID(user_uuid string) (int64, error) {
+	db, err := getDB()
+	if err != nil {
+		return 0, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var count int64
+
+	if err := db.Model(&model.Like{}).Where("user_uuid = ?", user_uuid).Count(&count).Error; err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
 // GetLikeListByVideoUUID 获取视频相关的Like列表
 func GetLikeListByVideoUUID(video_uuid string) ([]model.Like, error) {
 	db, err := getDB()

@@ -37,6 +37,8 @@ definitions:
         type: array
       code:
         type: integer
+      total:
+        type: integer
     type: object
   model.BarrageResp:
     properties:
@@ -94,6 +96,8 @@ definitions:
         items:
           $ref: '#/definitions/model.Collect'
         type: array
+      total:
+        type: integer
     type: object
   model.CollectStatusResp:
     properties:
@@ -138,6 +142,8 @@ definitions:
         items:
           $ref: '#/definitions/model.Comment'
         type: array
+      total:
+        type: integer
     type: object
   model.CommentResp:
     properties:
@@ -176,6 +182,8 @@ definitions:
         items:
           $ref: '#/definitions/model.Follow'
         type: array
+      total:
+        type: integer
     type: object
   model.FollowStatusResp:
     properties:
@@ -214,6 +222,8 @@ definitions:
         items:
           $ref: '#/definitions/model.Like'
         type: array
+      total:
+        type: integer
     type: object
   model.LikeStatusResp:
     properties:
@@ -302,6 +312,8 @@ definitions:
   model.VideoListResp:
     properties:
       code:
+        type: integer
+      total:
         type: integer
       video_list:
         items:

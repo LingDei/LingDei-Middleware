@@ -135,7 +135,7 @@ func DeleteFollow(follow_uuid string, user_uuid string) error {
 }
 
 // GetFollowCount 获取某个用户已关注用户的个数
-func GetFollowCount(user_uuid string) (int, error) {
+func GetFollowCount(user_uuid string) (int64, error) {
 	db, err := getDB()
 	if err != nil {
 		return 0, err
@@ -151,11 +151,11 @@ func GetFollowCount(user_uuid string) (int, error) {
 		return 0, err
 	}
 
-	return int(count), nil
+	return count, nil
 }
 
 // GetFanCount 获取Fan数量
-func GetFanCount(follow_uuid string) (int, error) {
+func GetFanCount(follow_uuid string) (int64, error) {
 	db, err := getDB()
 	if err != nil {
 		return 0, err
@@ -171,7 +171,7 @@ func GetFanCount(follow_uuid string) (int, error) {
 		return 0, err
 	}
 
-	return int(count), nil
+	return count, nil
 }
 
 // GetFollowStatus 获取Follow状态

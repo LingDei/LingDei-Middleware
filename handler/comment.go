@@ -73,9 +73,20 @@ func GetCommentListHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取 Comment 数量
+	total, err := method.GetCommentCount(video_uuid)
+	if err != nil {
+		return c.JSON(model.CommentListResp{
+			Code:        400,
+			CommentList: nil,
+		})
+	}
+		
+
 	return c.JSON(model.CommentListResp{
 		Code:        200,
 		CommentList: comments,
+		Total:       total,
 	})
 }
 

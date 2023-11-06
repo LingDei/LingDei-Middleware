@@ -102,9 +102,19 @@ func GetFollowListHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取关注列表的数量
+	total, err := method.GetFollowCount(user_uuid)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
 	return c.JSON(model.FollowListResp{
 		Code:       200,
 		FollowList: followList,
+		Total:      total,
 	})
 }
 
@@ -200,9 +210,19 @@ func GetFansHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	// 获取粉丝列表的数量
+	total, err := method.GetFanCount(user_uuid)
+	if err != nil {
+		return c.JSON(model.OperationResp{
+			Code: 400,
+			Msg:  err.Error(),
+		})
+	}
+
 	return c.JSON(model.FanListResp{
 		Code:    200,
 		FanList: fansList,
+		Total:   total,
 	})
 }
 

@@ -58,7 +58,7 @@ func GetCommentList(video_uuid string, page, page_size int) ([]model.Comment, er
 }
 
 // GetCommentCount 获取Comment数量
-func GetCommentCount(video_uuid string) (int, error) {
+func GetCommentCount(video_uuid string) (int64, error) {
 	db, err := getDB()
 	if err != nil {
 		return 0, err
@@ -74,7 +74,7 @@ func GetCommentCount(video_uuid string) (int, error) {
 		return 0, err
 	}
 
-	return int(count), nil
+	return count, nil
 }
 
 // GetComment 获取Comment

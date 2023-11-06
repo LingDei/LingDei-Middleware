@@ -180,6 +180,26 @@ func GetCollectListByUserUUID(user_uuid string, page, page_size int) ([]model.Co
 	return collects, nil
 }
 
+// GetCollectCountByUserUUID 获取用户相关的Collect数量
+func GetCollectCountByUserUUID(user_uuid string) (int64, error) {
+	db, err := getDB()
+	if err != nil {
+		return 0, err
+	}
+
+	//结束后关闭 DB
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
+
+	var count int64
+
+	if err := db.Model(&model.Collect{}).Where("user_uuid = ?", user_uuid).Count(&count).Error; err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
 // GetCollectListByVideoUUID 获取视频相关的Collect列表
 func GetCollectListByVideoUUID(video_uuid string) ([]model.Collect, error) {
 	db, err := getDB()

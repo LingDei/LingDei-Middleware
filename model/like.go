@@ -30,4 +30,5 @@ type LikeStatusResp struct {
 type LikeListResp struct {
 	Code     int    `json:"code"`
 	LikeList []Like `json:"like_list"`
+	Total    int64  `json:"total,omitempty"`
 }
